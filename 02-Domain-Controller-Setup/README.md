@@ -9,7 +9,6 @@ Install and promote **Windows Server 2019** as a **Domain Controller** with a ne
 
 - Domain Name: evilcorp.local
 - Forest Functional Level: Windows Server 2019
-- Domain Functional Level: Windows Server 2019
 - DNS: Integrated with Active Directory
 - Domain Controller IP: 192.168.32.130
 
