@@ -15,21 +15,20 @@ The structure was created to ensure:
 
 ## 🏢 Domain Structure
 
-The following Organizational Units were created:
-evilcorp.local
-│
-├── OU=Admins
-│
-├── OU=Employees
-│ ├── OU=IT
-│ ├── OU=RH
-│ └── OU=Finance
-│
-├── OU=Endpoints
-│ ├── OU=Workstations
-│ └── OU=Servers
-│
-└── OU=Groups
+The following Organizational Units were created within the domain **evilcorp.local**:
+
+- **OU=Admins**
+
+- **OU=Employees**
+  - OU=IT
+  - OU=RH
+  - OU=Finance
+
+- **OU=Endpoints**
+  - OU=Workstations
+  - OU=Servers
+
+- **OU=Groups**
 
 
 ---
