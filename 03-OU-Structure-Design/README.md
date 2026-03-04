@@ -99,9 +99,11 @@ This OU supports proper implementation of access control models such as AGDLP.
 
 ## 📷 Screenshots
 
-![Full OU Structure](Images/createUO3.png)
 ![Employees OU](Images/createUO2.png)
+
 ![Endpoints OU](Images/createUO4.png)
+
+![Full OU Structure](Images/createUO3.png)
 
 ---
 
