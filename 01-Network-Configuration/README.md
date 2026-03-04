@@ -29,10 +29,6 @@ Active Directory requires a stable IP configuration to ensure proper DNS resolut
 
 ## 📷 Screenshots
 
-Add your screenshots in the `images/` folder and reference them below:
-
-Example:
-
 ![Static IP Configuration](images/static-ip.png)
 
 ---
