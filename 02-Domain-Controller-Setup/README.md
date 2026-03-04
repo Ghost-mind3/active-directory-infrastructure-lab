@@ -15,64 +15,62 @@ Install and promote **Windows Server 2019** as a **Domain Controller** with a ne
 
 ## 🔧 Installation Steps
 
-### 1. Install Active Directory Domain Services (AD DS)  
+### 1️⃣ Install Active Directory Domain Services (AD DS)  
 - Open **Server Manager → Add Roles and Features → AD DS**  
 - Follow the wizard to install the role  
 
-#### 📷 Screenshots
-![AD DS Installation](Images/ADconf.png) 
+#### 📷 Screenshot
+![AD DS Installation](Images/ADconf.png)
 
 ---
 
-### 2. Promote Server to Domain Controller  
-- In **Server Manager → AD DS**, select **Promote this server to a domain controller**  
+### 2️⃣ Promote Server to Domain Controller  
+- In **Server Manager → AD DS**, select **Promote this server to a domain controller**
 
-#### 📷 Screenshots
-![AD DS Installation](Images/promoteAD.png) 
+#### 📷 Screenshot
+![Promote AD](Images/promoteAD.png)
 
 ---
 
-### 3. Create New Forest  
-- Choose **Add a new forest** and enter the **Root Domain Name:** `evilcorp.local`  
+### 3️⃣ Create New Forest  
+- Choose **Add a new forest**  
+- Enter the **Root Domain Name:** `evilcorp.local`  
 - Set the **Forest Functional Level** and **Domain Functional Level** to **Windows Server 2019**  
-- Configure the **DSRM password**  
+- Configure the **DSRM password**
 
 #### 📷 Screenshots
-![NEW FORET creation](Images/createForêt.png)  
-
-![NEW FORET creation](Images/createForêt2.png)  
-
-![NEW FORET creation](Images/createForêt3.png) 
-
-![NEW FORET creation](Images/createForêt4.png)  
+![Create Forest Step 1](Images/createForêt.png)  
+![Create Forest Step 2](Images/createForêt2.png)  
+![Create Forest Step 3](Images/createForêt3.png)  
+![Create Forest Step 4](Images/createForêt4.png)
 
 ---
 
-### 4. Reboot Server  
+### 4️⃣ Reboot Server  
 - After promotion, the server will automatically restart  
 
-#### 📷 Screenshots
-![AD DS Installation](Images/DCpromote.png)  
+#### 📷 Screenshot
+![DC Promotion Complete](Images/DCpromote.png)
 
 ---
 
 ## ✅ Post-Installation Verification
 
-- **Domain evilcorp.local successfully created**  
-- **Static IP configured successfully**  
-- **RDP activated** – important for administration and security (remote management, auditing, limiting physical access)  
-- **DNS zone automatically created**  
-- **SYSVOL and NETLOGON shares verified**  
-- **`dcdiag` executed successfully**  
+- ✔ Domain **evilcorp.local** successfully created  
+- ✔ Static IP configured successfully  
+- ✔ RDP activated (important for administration and security)  
+- ✔ DNS zone automatically created  
+- ✔ SYSVOL and NETLOGON shares verified  
+- ✔ `dcdiag` executed successfully  
 
 ---
 
-## 🔐 RDP Best Practices on Domain Controllers
+## 🔐 RDP Best Practices (Future Improvements)
 
 1. Limit access to **administrators only**  
-2. Enable **encryption** for RDP sessions  
-3. Use **VPN** if accessing from outside the network  
-4. Enable **auditing/logging** of RDP sessions  
+2. Enable **Network Level Authentication (NLA)**  
+3. Use a **VPN** for remote external access  
+4. Enable **auditing and logging** for RDP sessions  
 5. Avoid using the **default Administrator account** for direct login  
 
 ---
@@ -81,11 +79,12 @@ Install and promote **Windows Server 2019** as a **Domain Controller** with a ne
 
 - Add **users and groups** in Active Directory  
 - Configure **Group Policy Objects (GPOs)**  
-...
+- Configure **DNS forwarders**  
+- Implement **Active Directory backup strategy**  
+- Harden server security  
 
 ---
-## 📷 Screenshots
 
-![AD DS Installation](Images/DCpromote2.png)
+## 📷 Additional Screenshot
 
-
+![Final DC State](Images/DCpromote2.png)
