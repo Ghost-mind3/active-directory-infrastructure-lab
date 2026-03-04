@@ -2,7 +2,7 @@
 
 ## 📌 Objective
 
-promote Windows Server 2019 as a Domain Controller.
+Install and promote Windows Server 2019 as a Domain Controller.
 
 ---
 
@@ -16,15 +16,23 @@ promote Windows Server 2019 as a Domain Controller.
 
 ## 🔧 Installation Steps
 
-1. Promote server to Domain Controller
-2. Create new forest
-3. Set DSRM password
-4. Reboot server
+1. Install Active Directory Domain Services (AD DS)
+   ## 📷 Screenshots
+![AD DS Installation](Images/ADconf.png) 
+2. Promote server to Domain Controller
+3. Create new forest
+4. Set DSRM password
+5. Reboot server
 
 ---
 
 ## 📷 Screenshots
 
+(Add promotion wizard screenshots here)
+
+Example:
+
+![AD DS Installation](images/adds-install.png)
 ![Domain Promotion](images/domain-promotion.png)
 
 ---
