@@ -42,8 +42,6 @@ Install and promote Windows Server 2019 as a Domain Controller.
 
 ![AD DS Installation](Images/DCpromote.png)
 
-![AD DS Installation](Images/DCpromote2.png)
-
 ---
 
 ## ✅ Verification
@@ -52,3 +50,9 @@ Install and promote Windows Server 2019 as a Domain Controller.
 - DNS zone automatically created
 - SYSVOL and NETLOGON shares verified
 - `dcdiag` executed successfully
+
+## 📷 Screenshots
+
+![AD DS Installation](Images/DCpromote2.png)
+
+
