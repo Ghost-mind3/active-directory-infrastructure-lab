@@ -30,7 +30,7 @@ Active Directory requires a stable IP configuration to ensure proper DNS resolut
 ## 📷 Screenshots
 
 ![Static IP Configuration](Images/netconfverify.png)
-![Static IP Configuration](Images/netconfverify2.png)
+
 
 
 ---
@@ -40,7 +40,9 @@ Active Directory requires a stable IP configuration to ensure proper DNS resolut
 The configuration was verified using:
 ipconfig /all
 
+## 📷 Screenshots
 
+![Static IP Configuration](Images/netconfverify2.png)
 
 
 Key points verified:
