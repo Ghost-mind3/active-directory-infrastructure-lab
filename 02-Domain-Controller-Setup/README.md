@@ -47,6 +47,8 @@ Install and promote Windows Server 2019 as a Domain Controller.
 ## ✅ Verification
 
 - Domain successfully created
+- Static IP configureted successsfully
+- 
 - DNS zone automatically created
 - SYSVOL and NETLOGON shares verified
 - `dcdiag` executed successfully
