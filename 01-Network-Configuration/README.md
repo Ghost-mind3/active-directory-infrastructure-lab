@@ -29,7 +29,7 @@ Active Directory requires a stable IP configuration to ensure proper DNS resolut
 
 ## 📷 Screenshots
 
-![Static IP Configuration](images/static-ip.png)
+![Static IP Configuration](images/ADconf.png)
 
 ---
 
