@@ -83,7 +83,9 @@ Users created:
 
 #### Password Configuration
 
-(Default password for standard users and specific password for it.admin)
+Default password for standard users : EvilCorp2026!
+and specific password for it.admin:Adm1n-EvilCorp-2026!
+
 
 ![IT Users Creation](Images/createUsr3IT.png)
 
@@ -103,19 +105,20 @@ Users created:
 
 #### Account Creation
 
-![RH Users Creation](Images/rh-users-creation.png)
+![RH Users Creation](Images/createUsr2RH.png)
+
 
 #### Password Configuration
 
 (Default password with forced change at next logon)
 
-![RH Password Configuration](Images/rh-password-config.png)
+![RH Users Creation](Images/createUsrRH.png)
 
 #### OU Placement Verification
 
 (Users placed inside OU=RH, OU=Employees)
 
-![RH OU Placement](Images/rh-ou-placement.png)
+![RH Users Creation](Images/createUsr2RH.png)
 
 ---
 
@@ -127,16 +130,16 @@ Users created:
 
 #### Account Creation
 
-![Finance Users Creation](Images/finance-users-creation.png)
+![Finance Users Creation](Images/createUsr2FIN.png)
 
 #### Password Configuration
 
 (Default password with forced change at next logon)
 
-![Finance Password Configuration](Images/finance-password-config.png)
+![Finance Users Creation](Images/createUsrFIN.png)
 
 #### OU Placement Verification
 
 (Users placed inside OU=Finance, OU=Employees)
 
-![Finance OU Placement](Images/finance-ou-placement.png)
+![Finance Users Creation](Images/createUsrFIN.png)
