@@ -64,7 +64,7 @@ The following procedure was performed:
 5. Click **Change**
    ![Join Step 5](Images/JoinDC5.png)
 
-6. Select **Domain** and enter: evilcorp.local
+6. Select **Domain** and enter: `evilcorp.local`
    ![Join Step 6](Images/JoinDC6.png)
 
 7. Provide domain administrator credentials
@@ -105,7 +105,7 @@ However:
 - It does not align with structured administrative design
 
 The computer object was moved to:
-OU=Endpoints and OU=Workstation
+OU=Endpoints and OU=Workstations
 
 This ensures:
 
