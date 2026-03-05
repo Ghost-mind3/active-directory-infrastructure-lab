@@ -2,89 +2,125 @@
 
 ## 📌 Objective
 
-Join a Windows 10 client machine to the domain `evilcorp.local` and ensure proper integration into the Active Directory structure.
+Join a Windows 10 client machine to the domain `evilcorp.local` and ensure proper integration within the Active Directory infrastructure.
 
 ---
 
 ## 🖥️ Environment Details
 
-- Domain Controller: 192.168.32.130
-- Domain: evilcorp.local
-- Client Machine: Windows 10
-- Client IP: 192.168.32.131
-- Network: 192.168.32.0/24
+- Domain Controller IP: 192.168.32.130  
+- Domain Name: evilcorp.local  
+- Client Machine: Windows 10  
+- Client IP Address: 192.168.32.131  
+- Network Range: 192.168.32.0/24  
 
 ---
 
 ## 🌐 Step 1 - Client Network Configuration
 
-The Windows 10 client was configured with:
+The Windows 10 client was configured with a static network configuration:
 
-- Static IP address: 192.168.32.131
-- Subnet mask: 255.255.255.0
-- Preferred DNS server: 192.168.32.130
+- IP Address: 192.168.32.131  
+- Subnet Mask: 255.255.255.0  
+- Preferred DNS Server: 192.168.32.130  
 
-## 📷 Screenshots
-![clientnetconf](Images/netconfClient.png)
-⚠️ Important:  
-The DNS server must point to the Domain Controller to allow domain resolution.
+⚠️ **Important:**  
+The DNS server must point to the Domain Controller.  
+Without proper DNS configuration, the domain join process will fail.
 
-Without correct DNS configuration, the domain join will fail.
+### 📷 Screenshot
+![Client Network Configuration](Images/netconfClient.png)
 
-## 🔎 Step 2 - DNS Configuration
-![dnsconfig](Images/DnsConf.png)
-![dnsconfig](Images/DnsConf2.png)
-![dnsconfig](Images/DnsConf3.png)
-![dnsconfig](Images/DnsConf4.png)
+---
+
+## 🔎 Step 2 - DNS Verification
+
+DNS configuration was verified to ensure proper name resolution for the domain `evilcorp.local`.
+
+### 📷 Screenshots
+![DNS Config 1](Images/DnsConf.png)  
+![DNS Config 2](Images/DnsConf2.png)  
+![DNS Config 3](Images/DnsConf3.png)  
+![DNS Config 4](Images/DnsConf4.png)
+
+---
 
 ## 🔐 Step 3 - Join the Domain
 
-Procedure followed:
+The following procedure was performed:
 
-1. Open Windows System Files and click on 'My PC'
-   ![joindc-01](Images/JoinDC.png)
-2. Click 'property'
-   ![joindc-02](Images/JoinDC2.png)
-4. Click on 'advance setting system'
-   ![joindc-03](Images/JoinDC3.png)
-5. Click on 'Computer Name'
-   ![joindc-04](Images/JoinDC4.png)
-6. Click on 'Modify'
-   ![joindc-05](Images/JoinDC5.png)
-7. Enter the Domain Name evilcorp.local
-   ![joindc-06](Images/JoinDC6.png)
+1. Open **This PC**
+   ![Join Step 1](Images/JoinDC.png)
+
+2. Click **Properties**
+   ![Join Step 2](Images/JoinDC2.png)
+
+3. Select **Advanced system settings**
+   ![Join Step 3](Images/JoinDC3.png)
+
+4. Go to the **Computer Name** tab
+   ![Join Step 4](Images/JoinDC4.png)
+
+5. Click **Change**
+   ![Join Step 5](Images/JoinDC5.png)
+
+6. Select **Domain** and enter: evilcorp.local
+   ![Join Step 6](Images/JoinDC6.png)
+
+7. Provide domain administrator credentials
+
 8. Restart the machine
-    ![joindc-07](Images/JoinDC7.png)
-   ![joindc-08](Images/JoinDC8.png)
+![Join Step 7](Images/JoinDC7.png)  
+![Join Step 8](Images/JoinDC8.png)
 
-Upon successful authentication, the machine becomes a domain member.
-![joindc-07](Images/JoinDC7.png)
-![joindc-09](Images/JoinDC9.png)
+After successful authentication and reboot, the machine becomes a domain member.
 
+### 📷 Confirmation
+![Domain Join Success](Images/JoinDC9.png)
+
+---
 
 ## ✅ Step 4 - Verification in Active Directory
 
 After reboot:
 
-- Open Active Directory Users and Computers
-- Confirm the computer object appears under:
-  ![joindc-10](Images/JoinDC10.png)
+- Open **Active Directory Users and Computers**
+- Confirm the computer object appears under the default **Computers** container.
 
-  This confirms the machine has successfully joined the domain.
+### 📷 Screenshot
+![AD Computer Object](Images/JoinDC10.png)
 
-  ## 🧠 Why Moving the Computer Object Is Important
+This confirms the machine has successfully joined the domain.
 
-By default, new domain-joined machines are placed inside the "Computers" container.
+---
+
+## 📂 Step 5 - Moving the Computer Object to the Correct OU
+
+By default, newly joined machines are placed inside the **Computers** container.
 
 However:
 
 - The default container is not an Organizational Unit
-- Group Policies cannot be directly linked there
-- It does not follow structured administrative design
+- Group Policies cannot be linked directly to it
+- It does not align with structured administrative design
 
-Moving the machine into:
+The computer object was moved to:
+OU=Endpoints
+└── OU=Workstations
 
-Endpoints → Workstations
 
-ensures proper policy targeting and organizational consistency.
+This ensures:
 
+- Proper Group Policy application  
+- Logical asset organization  
+- Structured administrative management  
+- Separation between workstations and servers  
+
+---
+
+## 🧠 Key Takeaways
+
+- DNS configuration is critical for domain operations.  
+- Static IP configuration ensures network stability.  
+- Proper OU placement enables correct policy enforcement.  
+- Structured organization simplifies administration and scalability.  
