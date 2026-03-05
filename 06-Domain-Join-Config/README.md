@@ -105,9 +105,7 @@ However:
 - It does not align with structured administrative design
 
 The computer object was moved to:
-OU=Endpoints
-└── OU=Workstations
-
+OU=Endpoints and OU=Workstation
 
 This ensures:
 
