@@ -45,7 +45,7 @@ Procedure followed:
    ![joindc-01](Images/JoinDC.png)
 2. Click 'property'
    ![joindc-02](Images/JoinDC2.png)
-3. Click on 'advance setting system'
+4. Click on 'advance setting system'
    ![joindc-03](Images/JoinDC3.png)
 5. Click on 'Computer Name'
    ![joindc-04](Images/JoinDC4.png)
@@ -53,7 +53,7 @@ Procedure followed:
    ![joindc-05](Images/JoinDC5.png)
 7. Enter the Domain Name evilcorp.local
    ![joindc-06](Images/JoinDC6.png)
-9. Restart the machine
+8. Restart the machine
     ![joindc-07](Images/JoinDC7.png)
    ![joindc-08](Images/JoinDC8.png)
 
