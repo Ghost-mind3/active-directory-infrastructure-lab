@@ -48,7 +48,7 @@ GPO-Workstation-Baseline
 
 ---
 
-## Security Configuration
+# Security Configuration
 
 Security settings were configured under:
 
@@ -63,7 +63,31 @@ The baseline includes several controls designed to improve workstation security.
 
 ---
 
-## Guest Account Hardening
+# Windows Defender Firewall Configuration
+
+The **Windows Defender Firewall** was configured through the GPO to ensure that all domain workstations have an active firewall policy.
+
+Configuration path:
+
+```
+Computer Configuration
+└── Policies
+    └── Windows Settings
+        └── Security Settings
+            └── Windows Defender Firewall with Advanced Security
+```
+
+The firewall was configured to ensure the following:
+
+- Firewall **enabled for the Domain profile**
+- Centralized firewall management through **Group Policy**
+- Protection against unauthorized inbound connections
+
+This configuration ensures that all domain workstations enforce a consistent network security policy.
+
+---
+
+# Guest Account Hardening
 
 The built-in **Guest account** was disabled.
 
@@ -71,7 +95,7 @@ Disabling this account prevents anonymous or unauthorized access attempts that c
 
 ---
 
-## Secure Logon Configuration
+# Secure Logon Configuration
 
 Insecure logon mechanisms were disabled in order to enforce stronger authentication standards within the domain environment.
 
@@ -79,7 +103,7 @@ This reduces the risk of authentication abuse and improves the overall security 
 
 ---
 
-## Restricted Groups Configuration
+# Restricted Groups Configuration
 
 To centralize administrative privilege management, **Restricted Groups** were configured.
 
@@ -102,24 +126,46 @@ Using **security groups instead of individual user accounts** follows standard e
 
 ---
 
-## Screenshots
+# Screenshots
 
-- GPO creation
-  ![GPO Creation](Images/GPO-Workstations3.png)
-- Policy configuration
-![GPO Creation](Images/GPO-Workstations7.png)
-![GPO Creation](Images/GPO-Workstations10.png)
-- Restricted groups setup
+## GPO Creation
+
+![GPO Creation](Images/GPO-Workstations3.png)
+
+---
+
+## Firewall Configuration
+
+![Firewall Configuration](Images/Allow-Firewall.png)
+
+![Firewall Configuration](Images/Allow-Firewall2.png)
+
+---
+
+## Security Policy Configuration
+
+![Policy Configuration](Images/GPO-Workstations7.png)
+
+![Policy Configuration](Images/GPO-Workstations10.png)
+
+---
+
+## Restricted Groups Configuration
+
 ![Groups Restricted](Images/Groups-Restricted.png)
+
 ![Groups Restricted](Images/Groups-Restricted2.png)
+
 ![Groups Restricted](Images/Groups-Restricted3.png)
+
 ![Groups Restricted](Images/Groups-Restricted4.png)
 
 ---
 
-## Key Takeaways
+# Key Takeaways
 
 - Group Policy provides centralized configuration management in Active Directory environments.
 - Applying policies to Organizational Units ensures structured and scalable administration.
 - Disabling unnecessary accounts reduces potential attack surfaces.
 - Managing administrative access through security groups improves operational security.
+- Enforcing firewall policies through GPO strengthens network security across domain workstations.
