@@ -105,11 +105,11 @@ Using **security groups instead of individual user accounts** follows standard e
 ## Screenshots
 
 - GPO creation
-  [GPO Creation](Images/GPO-Workstations3.png)
+  ![GPO Creation](Images/GPO-Workstations3.png)
 - Policy configuration
- [GPO Creation](Images/GPO-Workstations6.png)
-[GPO Creation](Images/GPO-Workstations7.png)
-[GPO Creation](Images/GPO-Workstations10.png)
+ ![GPO Creation](Images/GPO-Workstations6.png)
+![GPO Creation](Images/GPO-Workstations7.png)
+![GPO Creation](Images/GPO-Workstations10.png)
 - Restricted groups setup
 
 ---
