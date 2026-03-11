@@ -118,5 +118,5 @@ Computer Configuration
 * Account lockout policies help defend against brute-force attacks.
 * Kerberos policies manage authentication ticket lifetimes within the domain.
 
-These configurations establish a **secure baseline authentication policy** for the Active Directory environment.
+These configurations establish a **secure baseline authentication policy** for the Active Directory secure environment.
 
