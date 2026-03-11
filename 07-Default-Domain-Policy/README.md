@@ -1,4 +1,5 @@
 # 07 - Default Domain Policy
+![Password Policy](Images/DefaultDomainPolicy.png)
 
 ## 📌 Objective
 
@@ -22,6 +23,11 @@ The following settings were configured:
 * **Password complexity:** Enabled
 * **Maximum password age:** 90 days
 * **Enforce password history:** 24 passwords remembered
+
+## 📷 Screenshots
+
+![Password Policy](Images/DefaultDomainPolicy2.png)
+![Password Policy](Images/DefaultDomainPolicy3.png)
 
 ### Purpose
 
@@ -48,6 +54,10 @@ The following lockout settings were implemented:
 * **Account lockout duration:** 15 minutes
 * **Reset account lockout counter after:** 15 minutes
 
+## 📷 Screenshots
+
+![Password Policy](Images/DefaultDomainPolicy4.png)
+
 ### Purpose
 
 These settings help mitigate:
@@ -70,6 +80,10 @@ The following Kerberos settings were configured:
 
 * **Maximum lifetime for service ticket:** 10 hours
 * **Maximum lifetime for user ticket renewal:** 7 days
+
+## 📷 Screenshots
+
+![Password Policy](Images/DefaultDomainPolicy5.png)
 
 ### Purpose
 
