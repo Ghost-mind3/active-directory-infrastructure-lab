@@ -12,10 +12,12 @@ The policy is applied to the **Workstations Organizational Unit**, ensuring cons
 ## Target Scope
 
 The GPO is linked to the following Organizational Unit:
+
+```
 evilcorp.local
 └── OU=Endpoints
-└── OU=Workstations
-
+    └── OU=Workstations
+```
 
 All computers placed inside this OU automatically receive the security configuration defined by the policy.
 
@@ -23,26 +25,39 @@ All computers placed inside this OU automatically receive the security configura
 
 ## GPO Creation Procedure
 
-The policy was created using **Group Policy Management**.
+The policy was created using **Group Policy Management Console (GPMC)**.
 
-1. Open **Group Policy Management Console (GPMC)**
+1. Open **Group Policy Management**
 2. Navigate to:
+
+```
 Forest: evilcorp.local
 └── Domains
-└── evilcorp.local
-└── OU=Endpoints
-└── OU=Workstations
-
+    └── evilcorp.local
+        └── OU=Endpoints
+            └── OU=Workstations
+```
 
 3. Right-click **OU=Workstations**
 4. Select **Create a GPO in this domain, and Link it here**
 5. Name the policy:
 
+```
+GPO-Workstation-Baseline
+```
+
+---
+
+## Security Configuration
+
+Security settings were configured under:
+
+```
 Computer Configuration
 └── Policies
-└── Windows Settings
-└── Security Settings
-
+    └── Windows Settings
+        └── Security Settings
+```
 
 The baseline includes several controls designed to improve workstation security.
 
@@ -69,8 +84,10 @@ This reduces the risk of authentication abuse and improves the overall security 
 To centralize administrative privilege management, **Restricted Groups** were configured.
 
 The following Active Directory security group is used:
-GG_Workstation_Local-admins
 
+```
+GG_Workstation_Local-admins
+```
 
 This group is automatically added to the **local Administrators group** on all domain workstations.
 
