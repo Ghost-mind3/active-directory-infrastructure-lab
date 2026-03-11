@@ -104,12 +104,12 @@ Using **security groups instead of individual user accounts** follows standard e
 
 ## Screenshots
 
-Configuration screenshots are available in the **Images** directory.
-
-Examples include:
-
 - GPO creation
+  [GPO Creation](Images/GPO-Workstations3.png)
 - Policy configuration
+ [GPO Creation](Images/GPO-Workstations6.png)
+[GPO Creation](Images/GPO-Workstations7.png)
+[GPO Creation](Images/GPO-Workstations10.png)
 - Restricted groups setup
 
 ---
