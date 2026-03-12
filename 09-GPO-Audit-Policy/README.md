@@ -96,10 +96,12 @@ The following audit events were enabled:
 - Audit Kerberos Authentication Service → **Success and Failure**
 - Audit Kerberos Service Ticket Operations → **Success and Failure**
 - Audit Other Account Logon Events → **Success and Failure**
+- ...
 
 ### Screenshot
 
-![Account Logon Audit](Images/Audit-Account-Logon.png)
+![Account Logon Audit](Images/AuditGPO.png)
+
 
 ### Security Benefit
 
@@ -129,7 +131,7 @@ Audit Policies
 
 ### Screenshot
 
-![Account Management Audit](Images/Audit-Account-Management.png)
+![Account Management Audit](Images/AuditGPO2.png)
 
 ### Security Benefit
 
@@ -159,7 +161,7 @@ Audit Policies
 
 ### Screenshot
 
-![Logon Audit](Images/Audit-Logon.png)
+![Logon Audit](Images/AuditGPO3.png)
 
 ### Security Benefit
 
@@ -188,7 +190,7 @@ Audit Policies
 
 ### Screenshot
 
-![Privilege Use Audit](Images/Audit-Privilege-Use.png)
+![Privilege Use Audit](Images/AuditGPO4.png)
 
 ### Security Benefit
 
@@ -226,5 +228,13 @@ This allows administrators to detect:
 - Centralized audit logging is a **critical component of enterprise security monitoring**.
 
 ---
+
+### Screenshot
+
+![Privilege Use Audit](Images/AuditGPO5.png)
+![Privilege Use Audit](Images/AuditGPO6.png)
+![Privilege Use Audit](Images/AuditGPO7.png)
+
+
 
 
