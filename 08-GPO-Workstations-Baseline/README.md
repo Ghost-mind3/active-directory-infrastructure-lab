@@ -138,8 +138,6 @@ Using **security groups instead of individual user accounts** follows standard e
 
 ![Firewall Configuration](Images/Allow-Firewall.png)
 
-![Firewall Configuration](Images/Allow-Firewall2.png)
-
 ---
 
 ## Security Policy Configuration
