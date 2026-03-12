@@ -69,10 +69,6 @@ Computer Configuration
                 └── Audit Policies
 ```
 
-### Screenshot
-
-![Audit Policy Navigation](Images/Audit-Policy-Navigation.png)
-
 ---
 
 # Account Logon Auditing
