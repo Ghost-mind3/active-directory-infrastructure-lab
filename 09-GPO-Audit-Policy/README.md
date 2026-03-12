@@ -46,11 +46,7 @@ Forest: evilcorp.local
 
 ```
 GPO-Audit-Policy
-```
 
-### Screenshot
-
-![GPO Creation](Images/GPO-Audit-Policy-Creation.png)
 
 ---
 
