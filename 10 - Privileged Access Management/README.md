@@ -236,7 +236,7 @@ Using **security groups instead of individual user assignments** follows enterpr
 
 Configuration screenshots are stored in the **Images** directory.
 
-Examples include:
+include:
 
 - Administrative group creation
 - Domain admin delegation
