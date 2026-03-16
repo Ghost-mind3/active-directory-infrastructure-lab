@@ -218,7 +218,7 @@ Audit Policies
 ### Configured Setting
 
 - Audit Directory Service Changes → **Success**
-
+![DS-access](Images/DS-access.png)
 ### Security Benefit
 
 This configuration records events when:
