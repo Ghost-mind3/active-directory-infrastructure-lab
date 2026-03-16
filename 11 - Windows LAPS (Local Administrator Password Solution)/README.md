@@ -236,9 +236,9 @@ Configuration screenshots are stored in the **Images** directory.
 include:
 
 **LAPS PowerShell commands**
-![Powershell-Commands](Images/PowershellScreen.png)
+![Powershell-Commands](Images/PowersellScreen.png)
 
-![Powershell-Commands](Images/PowershellScreen.png)
+![Powershell-Commands](Images/PowershellScreen2.png)
 
 Group Policy configuration
 - Password retrieval from Active Directory
