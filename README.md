@@ -1,5 +1,11 @@
 # Active Directory Security Lab
 
+![Windows Server](https://img.shields.io/badge/Windows%20Server-2019-blue)
+![Active Directory](https://img.shields.io/badge/Active%20Directory-Infrastructure-blue)
+![Security](https://img.shields.io/badge/Security-Hardening-green)
+![Lab Project](https://img.shields.io/badge/Project-Lab-orange)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+
 A hands-on lab project demonstrating the deployment and hardening of a **secure Active Directory infrastructure** using enterprise security practices.
 
 This repository documents the complete setup of a **Windows Active Directory environment**, including security hardening, access management, and auditing.
@@ -19,7 +25,7 @@ This lab was created to practice and demonstrate skills in:
 - Windows LAPS implementation
 - Security auditing and monitoring
 
-The project serves as a **portfolio demonstration for system administration and cybersecurity roles**.
+This project serves as a **portfolio demonstration for system administration and cybersecurity roles**.
 
 ---
 
@@ -100,7 +106,7 @@ active-directory-security-lab
 ├── 11-Windows-LAPS
 ```
 
-Each section contains documentation, configuration steps, and screenshots.
+Each directory contains documentation, configuration procedures, and screenshots.
 
 ---
 
@@ -172,7 +178,7 @@ Benefits include:
 
 - Unique local administrator password per machine
 - Automatic password rotation
-- Secure storage of passwords in Active Directory
+- Secure storage in Active Directory
 
 This prevents **lateral movement attacks using shared local administrator credentials**.
 
@@ -191,7 +197,7 @@ Audited activities include:
 
 ---
 
-# Important Event IDs
+# Important Security Event IDs
 
 | Event ID | Description |
 |--------|-------------|
@@ -209,8 +215,6 @@ Audited activities include:
 
 # Technologies Used
 
-This lab environment uses the following technologies:
-
 - Windows Server 2019
 - Active Directory Domain Services
 - DNS Server
@@ -224,13 +228,13 @@ This lab environment uses the following technologies:
 
 This project demonstrates practical knowledge of:
 
-- Active Directory administration
-- Enterprise security hardening
+- Active Directory infrastructure design
+- Enterprise security configuration
 - Privileged access management
-- Security auditing and monitoring
+- Security monitoring and auditing
 
 ---
 
 # Author
 
-This project was created as part of a personal **Active Directory security lab** to develop real-world system administration and cybersecurity skills.
+This project was created as part of a **hands-on Active Directory security lab** to develop real-world system administration and cybersecurity skills.
