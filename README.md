@@ -1,9 +1,5 @@
 # Active Directory Security Lab
 
-![Windows Server](https://img.shields.io/badge/Windows%20Server-2019-blue)
-![Active Directory](https://img.shields.io/badge/Active%20Directory-Lab-blue)
-![Status](https://img.shields.io/badge/Project-Learning%20Lab-green)
-
 This project is a **hands-on Active Directory lab** built to practice system administration and basic security concepts.
 
 It shows how to deploy a domain, organize users and computers, and apply security settings using Group Policy.
