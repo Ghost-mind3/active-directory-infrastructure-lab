@@ -26,6 +26,7 @@ This approach provides:
 - Improved scalability
 - Clear separation of responsibilities
 - Simplified auditing
+- ...
 
 If a user changes department or role, access can be modified simply by changing group membership.
 
