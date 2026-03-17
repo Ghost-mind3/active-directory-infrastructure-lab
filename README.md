@@ -1,16 +1,12 @@
 # Active Directory Security Lab
 
 ![Windows Server](https://img.shields.io/badge/Windows%20Server-2019-blue)
-![Active Directory](https://img.shields.io/badge/Active%20Directory-Infrastructure-blue)
-![Security](https://img.shields.io/badge/Security-Hardening-green)
-![Lab Project](https://img.shields.io/badge/Project-Lab-orange)
-![Status](https://img.shields.io/badge/Status-Completed-success)
+![Active Directory](https://img.shields.io/badge/Active%20Directory-Lab-blue)
+![Status](https://img.shields.io/badge/Project-Learning%20Lab-green)
 
-A hands-on lab project demonstrating the deployment and basic hardening of a **Windows Active Directory environment**.
+This project is a **hands-on Active Directory lab** built to practice system administration and basic security concepts.
 
-This project documents the setup of a domain, user and group management, and the implementation of common security configurations using Group Policy.
-
-The goal is to build a **realistic lab environment** and practice core system administration and security concepts.
+It shows how to deploy a domain, organize users and computers, and apply security settings using Group Policy.
 
 ---
 
@@ -19,18 +15,18 @@ The goal is to build a **realistic lab environment** and practice core system ad
 This lab was created to practice:
 
 - Active Directory deployment
-- Organizational Unit (OU) design
+- OU (Organizational Unit) structure
 - User and group management
 - Group Policy configuration
 - Privileged access management
-- Windows LAPS implementation
-- Security auditing basics
+- Windows LAPS
+- Basic security auditing
 
 ---
 
 # Lab Environment
 
-Domain Name:
+Domain:
 
 ```
 evilcorp.local
@@ -38,11 +34,10 @@ evilcorp.local
 
 Main components:
 
-- Windows Server 2019 Domain Controller
+- Windows Server 2019 (Domain Controller)
 - Active Directory Domain Services
 - DNS Server
-- Domain-joined Windows 10 workstation
-- Group Policy Management
+- Windows 10 workstation (joined to domain)
 
 ---
 
@@ -51,55 +46,52 @@ Main components:
 ```mermaid
 flowchart TD
 
-A[Domain: evilcorp.local]
+A[evilcorp.local]
 
 A --> B[Domain Controller]
 
-A --> C[Organizational Units]
+A --> C[Employees]
+C --> D[IT]
+C --> E[Finance]
+C --> F[RH]
 
-C --> D[Employees]
-D --> E[IT]
-D --> F[Finance]
-D --> G[RH]
+D --> G[it.admin]
+D --> H[it.support]
 
-E --> H[it.admin]
-E --> I[it.support]
+E --> I[fin.manager]
+E --> J[fin.user]
 
-F --> J[fin.manager]
-F --> K[fin.user]
+F --> K[rh.manager]
+F --> L[rh.user]
 
-G --> L[rh.manager]
-G --> M[rh.user]
+A --> M[Endpoints]
+M --> N[Servers]
+M --> O[Workstations]
 
-C --> N[Endpoints]
-N --> O[Servers]
-N --> P[Workstations]
+O --> P[Windows 10]
 
-P --> Q[Windows 10 Client]
+A --> Q[Groups]
 
-C --> R[Groups]
+Q --> R[GG_Domain_Admins]
+Q --> S[GG_IT_Admins]
+Q --> T[GG_IT_Support]
+Q --> U[GG_Finance]
+Q --> V[GG_RH]
+Q --> W[GG_Server_Admins]
+Q --> X[GG_Workstation_Local_admins]
 
-R --> S[GG_Domain_Admins]
-R --> T[GG_IT_Admins]
-R --> U[GG_IT_Support]
-R --> V[GG_Finance]
-R --> W[GG_RH]
-R --> X[GG_Server_Admins]
-R --> Y[GG_Workstation_Local_admins]
+O --> Y[GPO Workstations Baseline]
+O --> Z[GPO LAPS]
 
-P --> Z[Workstation GPO]
-P --> AA[Windows LAPS]
-
-A --> AB[Security Policies]
-AB --> AC[Default Domain Policy]
-AB --> AD[Advanced Audit Policy]
+A --> AA[Security Policies]
+AA --> AB[Default Domain Policy]
+AA --> AC[GPO Audit Policy]
+AA --> AD[GPO Admins Restrictions]
 ```
 
 ---
 
 # Active Directory Structure
-
-The domain is organized using a structured OU model.
 
 ```
 evilcorp.local
@@ -120,7 +112,7 @@ evilcorp.local
 ├── OU=Endpoints
 │     ├── OU=Servers
 │     └── OU=Workstations
-│           └── Windows 10 client
+│           └── Windows 10
 │
 └── OU=Groups
       ├── GG_Domain_Admins
@@ -134,101 +126,62 @@ evilcorp.local
 
 ---
 
-# Privileged Access Model
+# GPO Configuration
 
-Administrative privileges are assigned using security groups.
+Several Group Policy Objects were created to manage security and configuration.
+
+```
+Default Domain Policy
+GPO-Workstations-Baseline
+GPO-Audit-Policy
+GPO-Admins-Restrictions
+GPO-LAPS
+```
+
+### Description
+
+- **Default Domain Policy**
+  - Password policy and basic security settings
+
+- **GPO-Workstations-Baseline**
+  - Basic security configuration for workstations
+  - Disable guest account
+  - Manage local administrators
+  - etc.
+
+- **GPO-Audit-Policy**
+  - Enable audit logs (logon, account changes, etc.)
+
+- **GPO-Admins-Restrictions**
+  - Restrict administrative privileges
+
+- **GPO-LAPS**
+  - Manage local administrator passwords
+
+---
+
+# Privileged Access
 
 - **it.admin**
-  - Member of **GG_Domain_Admins**
-  - Used for domain administration
+  - Domain administrator (via `GG_Domain_Admins`)
 
 - **it.support**
-  - Member of **GG_Workstation_Local_admins**
-  - Used for local administration on workstations
+  - Local administrator on workstations (via `GG_Workstation_Local_admins`)
 
-This approach allows:
-
-- Centralized permission management  
-- Easier administration  
-- Reduced risk of misconfiguration  
+Permissions are assigned through groups instead of directly to users.
 
 ---
 
-# Project Structure
+# Security Features
 
-The repository is organized into multiple steps:
+This lab includes basic security configurations:
 
-```
-active-directory-security-lab
-│
-├── 01-Network-Configuration
-├── 02-Domain-Controller-Setup
-├── 03-OU-Structure-Design
-├── 04-Group-Management
-├── 05-User-Account-Management
-├── 06-Domain-Join-Configuration
-├── 07-Default-Domain-Policy
-├── 08-GPO-Workstations-Baseline
-├── 09-GPO-Audit-Policy
-├── 10-Privileged-Access-Management
-├── 11-Windows-LAPS
-```
-
-Each directory contains documentation and screenshots of the configuration process.
-
----
-
-# Security Controls Implemented
-
-## Password Policy
-
-Configured through the Default Domain Policy:
-
-- Password complexity enabled
-- Minimum password length
-- Password history
-- Maximum password age
-
----
-
-## Account Lockout Policy
-
-To reduce brute-force risks:
-
-- Account lockout threshold
-- Lockout duration
-- Reset counter
-
----
-
-## Workstation Security Baseline
-
-A GPO is applied to workstations to enforce:
-
-- Guest account disabled
-- Restricted Groups configuration
-- Controlled local administrator access
-
----
-
-## Windows LAPS
-
-Used to manage local administrator passwords:
-
-- Unique password per machine
-- Automatic rotation
-- Stored in Active Directory
-
----
-
-## Security Auditing
-
-Advanced audit policies are configured to monitor:
-
-- Logon events
-- Account management
-- Privilege usage
-- Directory changes
+- Password policy
+- Account lockout
+- Workstation security baseline
+- LAPS (local admin password management)
+- Audit logging
+- etc.
 
 ---
 
@@ -238,39 +191,34 @@ Advanced audit policies are configured to monitor:
 |--------|-------------|
 | 4624 | Successful logon |
 | 4625 | Failed logon |
-| 4672 | Special privileges assigned |
-| 4720 | User account created |
-| 4726 | User account deleted |
+| 4720 | User created |
+| 4726 | User deleted |
 | 4732 | User added to group |
-| 4768 | Kerberos ticket request |
-| 4769 | Kerberos service ticket |
-| 5136 | Directory object modified |
+etc.
 
 ---
 
 # Technologies Used
 
 - Windows Server 2019
-- Active Directory Domain Services
-- DNS Server
-- Group Policy Management
+- Active Directory
+- DNS
+- Group Policy
 - Windows LAPS
 
 ---
 
 # Learning Outcomes
 
-This lab helped me practice:
+This lab helped me understand:
 
-- Active Directory administration
-- OU and group design
-- Group Policy configuration
-- Basic security hardening
-- Privileged access management
-- Security auditing
+- How Active Directory works
+- How to organize users and computers
+- How to use Group Policy
+- Basic security configuration
 
 ---
 
 # Author
 
-Personal lab created to practice **Active Directory administration and security fundamentals**.
+Personal lab built to practice **Active Directory administration and security basics**.
