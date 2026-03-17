@@ -39,7 +39,7 @@ The login is successful and recorded in the logs.
 
 ### Screenshot
 
-![Successful Logon](Images/event-4624.png)
+![Successful Logon](Images/Event-4624.png)
 
 ---
 
