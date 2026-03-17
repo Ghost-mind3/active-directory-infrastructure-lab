@@ -63,10 +63,10 @@ The workstation receives the following GPOs:
 
 ### Screenshot
 
-![GPO Applied](Images/GPO-applied.png)
-![GPO Applied](Images/GPO-applied2.png)
-![GPO Applied](Images/GPO-applied3.png)
-![GPO Applied](Images/GPO-applied4.png)
+![GPO Applied](Images/GPO-Applied.png)
+![GPO Applied](Images/GPO-Applied2.png)
+![GPO Applied](Images/GPO-Applied3.png)
+![GPO Applied](Images/GPO-Applied4.png)
 
 ---
 
