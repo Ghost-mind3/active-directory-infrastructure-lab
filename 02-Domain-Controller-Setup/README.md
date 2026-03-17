@@ -70,9 +70,8 @@ Install and promote **Windows Server 2019** as a **Domain Controller** with a ne
 
 1. Limit access to **administrators only**  
 2. Enable **Network Level Authentication (NLA)**  
-3. Use a **VPN** for remote external access  
-4. Enable **auditing and logging** for RDP sessions  
-5. Avoid using the **default Administrator account** for direct login  
+3. Enable **auditing and logging** for RDP sessions  
+4. Avoid using the **default Administrator account** for direct login  
 
 ---
 
