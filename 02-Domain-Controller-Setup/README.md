@@ -81,7 +81,7 @@ Install and promote **Windows Server 2019** as a **Domain Controller** with a ne
 - Configure **Group Policy Objects (GPOs)**  
 - Configure **DNS forwarders**  
 - Implement **Active Directory backup strategy**  
-- Harden server security  
+- ... 
 
 ---
 
