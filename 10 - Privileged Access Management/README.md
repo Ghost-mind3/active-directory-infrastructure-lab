@@ -232,20 +232,7 @@ Using **security groups instead of individual user assignments** follows enterpr
 
 ---
 
-# Screenshots
-
-Configuration screenshots are stored in the **Images** directory.
-
-include:
-
-- Administrative group creation
-- Domain admin delegation
-- Domain admin membership
-- Workstation administrator group membership
-- Restricted groups configuration
-
 ---
-
 # Key Takeaways
 
 - Privileged access should always be managed through **security groups**
