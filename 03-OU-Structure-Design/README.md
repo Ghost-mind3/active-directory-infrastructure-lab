@@ -1,118 +1,145 @@
-# 03 - OU Structure Design
+# 03 - Conception de la structure des unités d’organisation (OU)
 
-## 📌 Objective
+## 📌 Objectif
 
-Design and implement a structured Organizational Unit (OU) hierarchy within the domain `evilcorp.local`.
+Concevoir et mettre en place une hiérarchie structurée d’**Unités d’Organisation (OU)** au sein du domaine `evilcorp.local`.
 
-The structure was created to ensure:
+Cette structure a été créée afin de garantir :
 
-- Logical separation of accounts
-- Security segmentation
-- Proper Group Policy application
-- Preparation for future Active Directory penetration testing
-
----
-
-## 🏢 Domain Structure
-
-The following Organizational Units were created within the domain **evilcorp.local**:
-
-- **OU=Admins**
-
-- **OU=Employees**
-  - OU=IT
-  - OU=RH
-  - OU=Finance
-
-- **OU=Endpoints**
-  - OU=Workstations
-  - OU=Servers
-
-- **OU=Groups**
-
+- Une séparation logique des comptes
+- Une segmentation de la sécurité
+- Une application cohérente des stratégies de groupe (GPO)
+- Une préparation aux futurs tests de sécurité et exercices de pentest Active Directory
 
 ---
 
-## 🔐 OU=Admins
+## 🏢 Structure du domaine
 
-This OU contains privileged administrative accounts.
+Les unités d’organisation suivantes ont été créées dans le domaine **`evilcorp.local`** :
 
-### Purpose:
-- Isolate administrative users
-- Apply stricter security policies
-- Reduce privilege escalation risks
-- Follow security best practices
-- ...
-
----
-
-## 👨‍💼 OU=Employees
-
-Contains standard domain users divided by department:
-
-- IT
-- RH
-- Finance
-
-### Purpose:
-- Department-based segmentation
-- Apply user-based GPOs per department
-- Simulate real enterprise structure
+```text
+evilcorp.local
+│
+├── OU=Admins
+│
+├── OU=Employees
+│   ├── OU=IT
+│   ├── OU=RH
+│   └── OU=Finance
+│
+├── OU=Endpoints
+│   ├── OU=Workstations
+│   └── OU=Servers
+│
+└── OU=Groups
+```
 
 ---
 
-## 🖥️ OU=Endpoints
+## 🔐 OU = Admins
 
-Contains all domain-joined machines.
+Cette unité d’organisation contient les comptes administratifs et privilégiés.
 
-### Sub-OUs:
-- Workstations (Windows 10 clients)
-- Servers
+### Objectifs
 
-### Purpose:
-- Apply computer-based GPOs
-- Separate workstation policies from server policies
-- Enforce security baseline at machine level
-
----
-
-## 👥 OU=Groups
-
-Contains all security groups used for:
-
-- Role-based access control
-- Secondary administrative privileges
-- Resource access management
-- ...
-
-This OU supports proper implementation of access control models such as AGDLP.
+- Isoler les utilisateurs administrateurs
+- Appliquer des politiques de sécurité plus strictes
+- Réduire les risques d’élévation de privilèges
+- Respecter les bonnes pratiques de sécurité Active Directory
+- Faciliter la gestion des comptes à privilèges
 
 ---
 
-## 🔧 Implementation Notes
+## 👨‍💼 OU = Employees
 
-- "Protect object from accidental deletion" enabled on critical OUs
-- Advanced Features enabled in Active Directory Users and Computers
-- Structure created before user and group deployment
+Cette unité d’organisation contient les utilisateurs standards du domaine, répartis par département :
+
+- **IT**
+- **RH**
+- **Finance**
+
+### Objectifs
+
+- Segmenter les utilisateurs par service
+- Appliquer des GPO spécifiques à chaque département
+- Reproduire une structure d’entreprise réaliste
+- Simplifier l’administration des utilisateurs
 
 ---
 
-## 📷 Screenshots
+## 🖥️ OU = Endpoints
 
-![Employees OU](Images/createUO2.png)
+Cette unité d’organisation regroupe l’ensemble des machines intégrées au domaine.
 
-![Endpoints OU](Images/createUO4.png)
+### Sous-unités d’organisation
 
-![Full OU Structure](Images/createUO3.png)
+- **Workstations** (postes de travail Windows 10/11)
+- **Servers** (serveurs)
+
+### Objectifs
+
+- Appliquer des GPO orientées machine
+- Séparer les politiques des postes utilisateurs de celles des serveurs
+- Renforcer la sécurité des systèmes
+- Standardiser la configuration des équipements du domaine
 
 ---
 
-## 🧠 Design Rationale
+## 👥 OU = Groups
 
-This OU hierarchy ensures:
+Cette unité d’organisation contient l’ensemble des groupes de sécurité utilisés dans l’environnement Active Directory.
 
-- Clear separation of privilege levels
-- Proper GPO targeting
-- Scalability for future expansion
-- Preparation for controlled security testing
+### Utilisations
 
+- Contrôle d’accès basé sur les rôles (RBAC)
+- Attribution de privilèges administratifs secondaires
+- Gestion des accès aux ressources
+- Administration simplifiée des permissions
+
+Cette organisation facilite la mise en œuvre de modèles de contrôle d’accès tels que **AGDLP** (*Accounts → Global Groups → Domain Local Groups → Permissions*).
+
+---
+
+## 🔧 Notes d’implémentation
+
+Les bonnes pratiques suivantes ont été appliquées :
+
+- Activation de l’option **« Protéger l’objet contre toute suppression accidentelle »** sur les OU critiques
+- Activation des **Fonctionnalités avancées** dans *Utilisateurs et ordinateurs Active Directory*
+- Création de la structure OU avant le déploiement des utilisateurs et des groupes
+- Préparation de l’environnement pour l’application future des GPO
+
+---
+
+## 📷 Captures d’écran
+
+### Structure des utilisateurs
+
+![OU Employees](Images/createUO2.png)
+
+### Structure des équipements
+
+![OU Endpoints](Images/createUO4.png)
+
+### Structure complète des OU
+
+![Structure complète des OU](Images/createUO3.png)
+
+---
+
+## 🧠 Justification de l’architecture
+
+Cette hiérarchie d’OU permet :
+
+- Une séparation claire des niveaux de privilèges
+- Un ciblage précis des stratégies de groupe (GPO)
+- Une meilleure organisation administrative
+- Une évolution simple et scalable de l’infrastructure
+- Une préparation optimale aux audits et tests de sécurité
+- Une gestion plus efficace des utilisateurs, groupes et équipements
+
+---
+
+## 🎯 Résultat
+
+Une structure Active Directory claire, évolutive et conforme aux bonnes pratiques a été mise en place dans le domaine **`evilcorp.local`**. Cette organisation facilite l’administration quotidienne, le déploiement des stratégies de sécurité et les futurs scénarios de tests et de simulation d’entreprise.
