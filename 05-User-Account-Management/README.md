@@ -1,146 +1,203 @@
-## 🔑 Account Creation Standards
+# 05 - Création et gestion des comptes utilisateurs
 
-To ensure consistency and administrative control, user accounts were created following a standardized provisioning process.
+## 📌 Objectif
 
-### 📌 Account Creation Policy
-
-Accounts are created by department and placed in their corresponding Organizational Units.
-
-Each department’s users are provisioned together to maintain structural consistency and simplify administration.
+Mettre en place une procédure standardisée de création des comptes utilisateurs afin d'assurer la cohérence, la sécurité et la facilité d'administration au sein du domaine **`evilcorp.local`**.
 
 ---
 
-## 🔐 Default Password Policy
+## 🔑 Normes de création des comptes
 
-To simulate a controlled enterprise onboarding process:
+Afin de garantir une gestion homogène des utilisateurs, les comptes ont été créés selon un processus de provisionnement standardisé.
 
-- All standard user accounts are assigned a default password:
-  
-  EvilCorp2026!
+### 📌 Politique de création des comptes
 
-- Users are required to change their password at first logon.
+Les comptes sont créés par département et placés dans leurs unités d'organisation (OU) respectives.
 
-The option **"User must change password at next logon"** is enabled for all standard users.
+Chaque groupe d'utilisateurs est provisionné par service afin de :
+
+- Maintenir une structure Active Directory cohérente
+- Faciliter l'administration quotidienne
+- Simplifier l'application des stratégies de groupe (GPO)
+- Garantir une séparation logique des utilisateurs
 
 ---
 
-## 🔒 Privileged Account Exception
+## 🔐 Politique de mot de passe par défaut
 
-The account:
+Afin de simuler un processus d'intégration utilisateur (*onboarding*) en environnement d'entreprise :
 
-- **it.admin**
+Tous les comptes utilisateurs standards reçoivent le mot de passe initial suivant :
 
-Is assigned a different initial password:
+```text
+EvilCorp2026!
+```
 
+Les utilisateurs sont obligés de modifier leur mot de passe lors de leur première connexion.
+
+L'option suivante est activée pour tous les comptes standards :
+
+> **L'utilisateur doit changer son mot de passe à la prochaine ouverture de session**
+
+---
+
+## 🔒 Exception pour les comptes privilégiés
+
+Le compte administratif suivant :
+
+```text
+it.admin
+```
+
+reçoit un mot de passe initial spécifique :
+
+```text
 Adm1n-EvilCorp-2026!
+```
 
-This reflects a common enterprise practice where privileged accounts:
+Cette approche reflète les pratiques courantes en entreprise où les comptes à privilèges :
 
-- Are provisioned separately
-- Follow stricter password standards
-- Are managed with additional oversight
-- ...
-
----
-
-## 🧠 Why This Approach Is Important
-
-This structured provisioning ensures:
-
-- Controlled onboarding
-- Reduced password mismanagement
-- Clear separation between standard and privileged accounts
-- Improved administrative consistency
-
-Using a default onboarding password simplifies bulk account creation while enforcing immediate password rotation ensures security compliance.
+- Sont créés séparément des comptes standards
+- Respectent des exigences de sécurité renforcées
+- Font l'objet d'un contrôle administratif accru
+- Bénéficient d'une gestion spécifique des accès
 
 ---
 
-## ⚠️ Administrative Notes
+## 🧠 Pourquoi cette approche est importante
 
-- Password complexity requirements are enforced by domain policy.
-- Accounts remain disabled until properly configured (if applicable).
-- Passwords are documented only for lab setup purposes.
+Cette méthode de provisionnement permet :
 
-## 📷 Screenshots
+- Un processus d'intégration contrôlé
+- Une réduction des erreurs liées à la gestion des mots de passe
+- Une séparation claire entre comptes standards et comptes privilégiés
+- Une meilleure cohérence administrative
+- Une administration simplifiée des utilisateurs
 
-The following screenshots document the user account creation process, organized by department.
-
----
-
-### 👨‍💻 IT Department
-
-Users created:
-- it.admin
-- it.support
-- it.user
-
-#### Account Creation
-
-![IT Users Creation](Images/createUsrIT.png)
-![IT Users Creation](Images/createUsr2IT.png)
-![IT Users Creation](Images/createUsr4IT.png)
-![IT Users Creation](Images/createUsr5IT.png)
-
-#### Password Configuration
-
-Default password for standard users : EvilCorp2026!
-and specific password for it.admin:Adm1n-EvilCorp-2026!
-
-
-![IT Users Creation](Images/createUsr3IT.png)
-
-#### OU Placement Verification
-
-(Users placed inside OU=IT, OU=Employees)
-
-![IT OU Placement](Images/createUsr6IT.png)
+L'utilisation d'un mot de passe temporaire facilite la création en masse des comptes, tandis que l'obligation de changement lors de la première connexion garantit le respect des bonnes pratiques de sécurité.
 
 ---
 
-### 🏢 Human Resources (RH)
+## ⚠️ Notes administratives
 
-Users created:
-- rh.manager
-- rh.user
-
-#### Account Creation
-
-![RH Users Creation](Images/createUsr2RH.png)
-
-
-#### Password Configuration
-
-(Default password with forced change at next logon)
-
-![RH Users Creation](Images/createUsrRH.png)
-
-#### OU Placement Verification
-
-(Users placed inside OU=RH, OU=Employees)
-
-![RH Users Creation](Images/createUsr2RH.png)
+- Les exigences de complexité des mots de passe sont appliquées par la stratégie de domaine.
+- Les comptes peuvent rester désactivés jusqu'à leur configuration complète, si nécessaire.
+- Les mots de passe présentés dans cette documentation sont utilisés uniquement dans le cadre du laboratoire de test.
 
 ---
 
-### 💰 Finance Department
+## 📷 Captures d'écran
 
-Users created:
-- fin.manager
-- fin.user
+Les captures suivantes documentent le processus de création des comptes utilisateurs par département.
 
-#### Account Creation
+---
 
-![Finance Users Creation](Images/createUsr2FIN.png)
+## 👨‍💻 Département Informatique (IT)
 
-#### Password Configuration
+### Utilisateurs créés
 
-(Default password with forced change at next logon)
+- `it.admin`
+- `it.support`
+- `it.user`
 
-![Finance Users Creation](Images/createUsrFIN.png)
+### Création des comptes
 
-#### OU Placement Verification
+![Création des utilisateurs IT](Images/createUsrIT.png)
 
-(Users placed inside OU=Finance, OU=Employees)
+![Création des utilisateurs IT](Images/createUsr2IT.png)
 
-![Finance Users Creation](Images/createUsrFIN.png)
+![Création des utilisateurs IT](Images/createUsr4IT.png)
+
+![Création des utilisateurs IT](Images/createUsr5IT.png)
+
+### Configuration des mots de passe
+
+- Mot de passe par défaut : `EvilCorp2026!`
+- Mot de passe spécifique pour `it.admin` : `Adm1n-EvilCorp-2026!`
+
+![Configuration des mots de passe IT](Images/createUsr3IT.png)
+
+### Vérification du placement dans l'OU
+
+Utilisateurs placés dans :
+
+```text
+OU=IT
+└── OU=Employees
+```
+
+![Placement des utilisateurs IT](Images/createUsr6IT.png)
+
+---
+
+## 🏢 Département Ressources Humaines (RH)
+
+### Utilisateurs créés
+
+- `rh.manager`
+- `rh.user`
+
+### Création des comptes
+
+![Création des utilisateurs RH](Images/createUsr2RH.png)
+
+### Configuration des mots de passe
+
+Mot de passe par défaut avec changement obligatoire à la prochaine connexion.
+
+![Configuration des utilisateurs RH](Images/createUsrRH.png)
+
+### Vérification du placement dans l'OU
+
+Utilisateurs placés dans :
+
+```text
+OU=RH
+└── OU=Employees
+```
+
+![Placement des utilisateurs RH](Images/createUsr2RH.png)
+
+---
+
+## 💰 Département Finance
+
+### Utilisateurs créés
+
+- `fin.manager`
+- `fin.user`
+
+### Création des comptes
+
+![Création des utilisateurs Finance](Images/createUsr2FIN.png)
+
+### Configuration des mots de passe
+
+Mot de passe par défaut avec changement obligatoire à la prochaine connexion.
+
+![Configuration des utilisateurs Finance](Images/createUsrFIN.png)
+
+### Vérification du placement dans l'OU
+
+Utilisateurs placés dans :
+
+```text
+OU=Finance
+└── OU=Employees
+```
+
+![Placement des utilisateurs Finance](Images/createUsrFIN.png)
+
+---
+
+## 🎯 Résultat
+
+L'ensemble des comptes utilisateurs a été créé avec succès selon les standards définis pour le domaine **`evilcorp.local`**.
+
+La structure mise en place garantit :
+
+- Une organisation cohérente des utilisateurs
+- Une séparation claire des privilèges
+- Une administration simplifiée
+- Une meilleure application des politiques de sécurité
+- Une préparation optimale aux futures configurations Active Directory et aux exercices de sécurité
