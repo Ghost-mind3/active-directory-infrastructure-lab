@@ -1,57 +1,59 @@
-# 10 - Privileged Access Management
+# 10 - Gestion des accès privilégiés (Privileged Access Management)
 
-## Overview
+## 📌 Vue d’ensemble
 
-This section focuses on implementing **Privileged Access Management (PAM)** within the Active Directory environment.
+Cette étape consiste à mettre en œuvre un modèle de **gestion des accès privilégiés (Privileged Access Management - PAM)** au sein de l’environnement Active Directory.
 
-The objective is to ensure that administrative privileges are **centrally managed, controlled, and delegated using security groups** rather than assigning permissions directly to individual users.
+L’objectif est de garantir que les privilèges administratifs soient **gérés, contrôlés et délégués de manière centralisée à l’aide de groupes de sécurité**, plutôt que d’être attribués directement aux utilisateurs.
 
-This approach follows industry best practices and improves the overall security posture of the domain.
-
----
-
-# Objective
-
-The goals of this configuration are:
-
-- Centralize administrator privilege management
-- Avoid assigning privileges directly to users
-- Implement a **group-based administrative model**
-- Reduce the risk of privilege misuse
-- Improve security and auditing of privileged accounts
-
-The implemented model follows the **User → Group → Permission** principle.
-
-```
-User
- ↓
-Security Group
- ↓
-Administrative Permission
-```
+Cette approche respecte les bonnes pratiques de sécurité recommandées pour les environnements Active Directory et contribue à réduire les risques liés aux comptes privilégiés.
 
 ---
 
-# Active Directory Structure
+# 🎯 Objectif
 
-Administrative groups are stored in the following Organizational Unit:
+Les objectifs de cette configuration sont les suivants :
 
+- Centraliser la gestion des privilèges administratifs
+- Éviter l’attribution directe de permissions aux utilisateurs
+- Mettre en œuvre un modèle d’administration basé sur les groupes
+- Réduire les risques d’abus de privilèges
+- Améliorer la traçabilité et l’audit des comptes administratifs
+
+Le modèle retenu repose sur le principe :
+
+```text
+Utilisateur
+     ↓
+Groupe de sécurité
+     ↓
+Permission administrative
 ```
+
+Cette méthode permet de simplifier la gestion des accès tout en améliorant la sécurité globale du domaine.
+
+---
+
+# 🏢 Structure Active Directory
+
+Les groupes administratifs sont stockés dans l’unité d’organisation suivante :
+
+```text
 evilcorp.local
 └── OU=Groups
 ```
 
-This OU centralizes security groups used for access control.
+Cette OU centralise l’ensemble des groupes de sécurité utilisés pour le contrôle d’accès.
 
 ---
 
-# Step 1 - Creating Administrative Groups
+# 👥 Étape 1 - Création des groupes administratifs
 
-To manage privileged access, dedicated **security groups** were created.
+Afin de gérer les accès privilégiés, plusieurs groupes de sécurité dédiés ont été créés.
 
-## Groups Created
+## Groupes créés
 
-```
+```text
 GG_Domain_Admins
 GG_Server_Admins
 GG_Workstation_Local-admins
@@ -59,184 +61,199 @@ GG_IT_Support
 ...
 ```
 
-## Group Configuration
+## Configuration des groupes
 
-| Setting | Value |
-|------|------|
-| Group Type | Security |
-| Group Scope | Global |
+| Paramètre | Valeur |
+|------------|---------|
+| Type de groupe | Sécurité |
+| Étendue du groupe | Globale |
 
-These groups allow administrators to delegate responsibilities while maintaining clear privilege boundaries.
+Ces groupes permettent de déléguer des responsabilités administratives tout en maintenant une séparation claire des privilèges.
 
-### Screenshot
+### 📷 Capture d’écran
 
-![Admin Groups Creation](Images/Admin-Groups-Creation.png)
+![Création des groupes administratifs](Images/Admin-Groups-Creation.png)
 
 ---
 
-# Step 2 - Assigning Domain Administrative Privileges
+# 👑 Étape 2 - Attribution des privilèges d’administration du domaine
 
-A dedicated group was created to manage **domain administrator privileges**.
+Un groupe dédié a été créé afin de gérer les privilèges d’administration du domaine.
 
-Instead of directly adding users to **Domain Admins**, the following delegation model was implemented.
+Plutôt que d’ajouter directement les utilisateurs au groupe intégré **Domain Admins**, le modèle suivant a été mis en place :
 
-```
+```text
 GG_Domain_Admins
- ↓
+        ↓
 Domain Admins
 ```
 
-This approach ensures that domain-level privileges are **centrally managed through security groups**.
+Cette approche permet de centraliser la gestion des privilèges d’administration du domaine et facilite les audits.
 
-### Screenshot
+### 📷 Capture d’écran
 
-![Domain Admin Delegation](Images/Domain-Admin-GroupMenbership.png)
+![Délégation Domain Admin](Images/Domain-Admin-GroupMenbership.png)
 
 ---
 
-# Step 3 - Adding the Domain Administrator User
+# 👤 Étape 3 - Ajout de l’administrateur du domaine
 
-The account **it.admin** was added to the domain administrator group.
+Le compte suivant a été ajouté au groupe d’administration du domaine :
 
-```
-User
+```text
+Utilisateur
 it.admin
 ```
 
-```
-Group
+```text
+Groupe
 GG_Domain_Admins
 ```
 
-This membership grants **domain administrative privileges** through the following hierarchy:
+Cette appartenance lui confère les privilèges suivants :
 
-```
+```text
 it.admin
- ↓
+    ↓
 GG_Domain_Admins
- ↓
+    ↓
 Domain Admins
- ↓
-Full Domain Administrative Privileges
+    ↓
+Privilèges complets d’administration du domaine
 ```
 
-### Screenshot
+### 📷 Capture d’écran
 
-![Domain Admin Membership](Images/Domain-Admin-Membership.png)
+![Membre Domain Admin](Images/Domain-Admin-Membership.png)
 
 ---
 
-# Step 4 - Workstation Administrator Management
+# 🖥️ Étape 4 - Gestion des administrateurs de postes de travail
 
-Administrative privileges for domain workstations are delegated to IT support.
+Les privilèges administratifs sur les postes de travail ont été délégués à l’équipe de support informatique.
 
-The following group is used:
+Le groupe utilisé est :
 
-```
+```text
 GG_Workstation_Local-admins
 ```
 
-The user **it.support** was added to this group.
+L’utilisateur suivant a été ajouté à ce groupe :
 
-```
+```text
 it.support
- ↓
-GG_Workstation_Local-admins
- ↓
-Local Administrators (Workstations)
 ```
 
-This allows IT support staff to manage workstations **without requiring Domain Admin privileges**.
+Hiérarchie des privilèges :
 
-### Screenshot
+```text
+it.support
+    ↓
+GG_Workstation_Local-admins
+    ↓
+Administrateurs locaux des postes de travail
+```
 
-![Workstation Admin Membership](Images/Admin-Group-Membership2.png)
+Cette configuration permet aux techniciens support d’administrer les postes clients sans nécessiter de privilèges **Domain Admin**.
+
+### 📷 Capture d’écran
+
+![Administrateur des postes](Images/Admin-Group-Membership2.png)
 
 ---
 
-# Step 5 - Assigning Local Administrator Rights via Group Policy
+# ⚙️ Étape 5 - Attribution des droits administratifs locaux via GPO
 
-Administrative rights on workstations are applied using **Group Policy Restricted Groups**.
+Les privilèges administratifs locaux sur les postes de travail sont appliqués automatiquement à l’aide des **Restricted Groups** dans une stratégie de groupe.
 
-## Policy Used
+## GPO utilisée
 
-```
+```text
 GPO-Workstation-Baseline
 ```
 
-## Configuration Path
+## Chemin de configuration
 
-```
-Computer Configuration
-└── Policies
-    └── Windows Settings
-        └── Security Settings
-            └── Restricted Groups
+```text
+Configuration ordinateur
+└── Stratégies
+    └── Paramètres Windows
+        └── Paramètres de sécurité
+            └── Groupes restreints (Restricted Groups)
 ```
 
-## Configuration
+## Configuration appliquée
 
-```
-Group Name
+```text
+Nom du groupe local
 Administrators
 ```
 
-```
-Members
+```text
+Membres
 GG_Workstation_Local-admins
 ```
 
-This configuration ensures that members of **GG_Workstation_Local-admins** automatically become **local administrators** on all workstations.
+Grâce à cette configuration, tous les membres du groupe **GG_Workstation_Local-admins** deviennent automatiquement administrateurs locaux sur l’ensemble des postes de travail du domaine.
 
-### Screenshot
+### 📷 Capture d’écran
 
-![Restricted Groups Configuration](Images/Restricted-Groups-Admins.png)
-
----
-
-# Result
-
-After applying this configuration:
-
-- **it.admin** has **Domain Administrator privileges**
-- **it.support** has **local administrator privileges on workstations**
-- administrative roles are **centrally managed through security groups**
-
-Example:
-
-```
-User: it.admin
-Role: Domain Administrator
-Scope: Active Directory Domain
-```
-
-```
-User: it.support
-Role: Workstation Administrator
-Scope: Domain Workstations
-```
+![Configuration Restricted Groups](Images/Restricted-Groups-Admins.png)
 
 ---
 
-# Security Benefits
+# ✅ Résultat
 
-This privileged access model provides several advantages:
+Après application de cette configuration :
 
-- Centralized privilege management
-- Reduced attack surface
-- Easier auditing of administrator roles
-- Clear separation of responsibilities
-- Improved domain security
+- **it.admin** dispose des privilèges **Domain Administrator**
+- **it.support** dispose des privilèges **Administrateur local des postes de travail**
+- Les rôles administratifs sont gérés de manière centralisée via les groupes de sécurité
 
-Using **security groups instead of individual user assignments** follows enterprise Active Directory security practices.
+### Exemple
+
+```text
+Utilisateur : it.admin
+Rôle : Administrateur du domaine
+Portée : Domaine Active Directory
+```
+
+```text
+Utilisateur : it.support
+Rôle : Administrateur des postes de travail
+Portée : Postes Windows du domaine
+```
 
 ---
 
----
-# Key Takeaways
+# 🔐 Bénéfices de sécurité
 
-- Privileged access should always be managed through **security groups**
-- Direct user privilege assignment should be avoided
-- Group Policy enables centralized enforcement of administrative roles
-- Delegating workstation administration reduces the need for Domain Admin access
-- Structured privilege management improves Active Directory security
+Ce modèle de gestion des accès privilégiés offre plusieurs avantages :
+
+- Gestion centralisée des privilèges
+- Réduction de la surface d’attaque
+- Audit simplifié des rôles administratifs
+- Séparation claire des responsabilités
+- Réduction des privilèges excessifs
+- Amélioration de la sécurité globale du domaine
+
+L’utilisation de groupes de sécurité plutôt que l’attribution directe de privilèges aux utilisateurs constitue une bonne pratique essentielle dans les environnements Active Directory d’entreprise.
+
+---
+
+# 🧠 Points clés à retenir
+
+- Les accès privilégiés doivent être gérés via des **groupes de sécurité**.
+- L’attribution directe de privilèges aux utilisateurs doit être évitée.
+- Les stratégies de groupe permettent une application centralisée des rôles administratifs.
+- La délégation de l’administration des postes de travail réduit le recours aux privilèges **Domain Admin**.
+- Une gestion structurée des privilèges améliore considérablement la sécurité Active Directory.
+- Le principe du **moindre privilège (Least Privilege)** doit être appliqué autant que possible.
+
+---
+
+## 🎯 Conclusion
+
+La mise en œuvre de ce modèle de **Privileged Access Management (PAM)** permet d'établir une gestion des privilèges cohérente, évolutive et conforme aux bonnes pratiques de sécurité Active Directory.
+
+L'environnement **`evilcorp.local`** dispose désormais d'une structure d'administration claire où les privilèges sont attribués via des groupes de sécurité, facilitant ainsi la gestion quotidienne, les audits de sécurité et la réduction des risques liés aux comptes administratifs.
