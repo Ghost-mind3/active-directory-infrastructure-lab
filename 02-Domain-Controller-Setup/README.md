@@ -1,90 +1,115 @@
-# 🌐 Domain Controller Setup – Windows Server 2019
+# 🌐 Installation du contrôleur de domaine – Windows Server 2019
 
-## 📌 Objective
-Install and promote **Windows Server 2019** as a **Domain Controller** with a new Active Directory forest.
+## 📌 Objectif
 
----
-
-## 🏢 Domain Information
-
-- Domain Name: evilcorp.local
-- Forest Functional Level: Windows Server 2019
-- DNS: Integrated with Active Directory
-- Domain Controller IP: 192.168.32.130
+Installer et promouvoir **Windows Server 2019** en tant que **contrôleur de domaine (Domain Controller)** avec une nouvelle forêt Active Directory.
 
 ---
 
-## 🔧 Installation Steps
+## 🏢 Informations sur le domaine
 
-### 1️⃣ Install Active Directory Domain Services (AD DS)  
-- Open **Server Manager → Add Roles and Features → AD DS**  
-- Follow the wizard to install the role  
-
-#### 📷 Screenshot
-![AD DS Installation](Images/ADconf.png)
+- **Nom du domaine :** `evilcorp.local`
+- **Niveau fonctionnel de la forêt :** Windows Server 2019
+- **DNS :** Intégré à Active Directory
+- **Adresse IP du contrôleur de domaine :** 192.168.32.130
 
 ---
 
-### 2️⃣ Promote Server to Domain Controller  
-- In **Server Manager → AD DS**, select **Promote this server to a domain controller**
+## 🔧 Étapes d’installation
 
-#### 📷 Screenshot
-![Promote AD](Images/promoteAD.png)
+### 1️⃣ Installation des services de domaine Active Directory (AD DS)
 
----
+- Ouvrir **Gestionnaire de serveur (Server Manager)** → **Ajouter des rôles et fonctionnalités**
+- Sélectionner le rôle **Services de domaine Active Directory (AD DS)**
+- Suivre l’assistant jusqu’à la fin de l’installation
 
-### 3️⃣ Create New Forest  
-- Choose **Add a new forest**  
-- Enter the **Root Domain Name:** `evilcorp.local`  
-- Set the **Forest Functional Level** and **Domain Functional Level** to **Windows Server 2019**  
-- Configure the **DSRM password**
+#### 📷 Capture d’écran
 
-#### 📷 Screenshots
-![Create Forest Step 1](Images/createForêt.png)  
-![Create Forest Step 2](Images/createForêt2.png)  
-![Create Forest Step 3](Images/createForêt3.png)  
-![Create Forest Step 4](Images/createForêt4.png)
+![Installation AD DS](Images/ADconf.png)
 
 ---
 
-### 4️⃣ Reboot Server  
-- After promotion, the server will automatically restart  
+### 2️⃣ Promotion du serveur en contrôleur de domaine
 
-#### 📷 Screenshot
-![DC Promotion Complete](Images/DCpromote.png)
+- Dans **Gestionnaire de serveur** → **AD DS**, cliquer sur **Promouvoir ce serveur en contrôleur de domaine**
 
----
+#### 📷 Capture d’écran
 
-## ✅ Post-Installation Verification
-
-- ✔ Domain **evilcorp.local** successfully created  
-- ✔ Static IP configured successfully  
-- ✔ RDP activated (important for administration and security)  
-- ✔ DNS zone automatically created  
-- ✔ SYSVOL and NETLOGON shares verified  
-- ✔ `dcdiag` executed successfully  
+![Promotion du contrôleur de domaine](Images/promoteAD.png)
 
 ---
 
-## 🔐 RDP Best Practices (Future Improvements)
+### 3️⃣ Création d’une nouvelle forêt
 
-1. Limit access to **administrators only**  
-2. Enable **Network Level Authentication (NLA)**  
-3. Enable **auditing and logging** for RDP sessions  
-4. Avoid using the **default Administrator account** for direct login  
+- Sélectionner **Ajouter une nouvelle forêt**
+- Saisir le **nom du domaine racine :** `evilcorp.local`
+- Définir le **niveau fonctionnel de la forêt** et le **niveau fonctionnel du domaine** sur **Windows Server 2019**
+- Configurer le **mot de passe DSRM (Directory Services Restore Mode)**
+
+#### 📷 Captures d’écran
+
+![Création de la forêt - Étape 1](Images/createForêt.png)
+
+![Création de la forêt - Étape 2](Images/createForêt2.png)
+
+![Création de la forêt - Étape 3](Images/createForêt3.png)
+
+![Création de la forêt - Étape 4](Images/createForêt4.png)
 
 ---
 
-## 📝 Next Steps
+### 4️⃣ Redémarrage du serveur
 
-- Add **users and groups** in Active Directory  
-- Configure **Group Policy Objects (GPOs)**  
-- Configure **DNS forwarders**  
-- Implement **Active Directory backup strategy**  
-- ... 
+- Après la promotion, le serveur redémarre automatiquement afin d’appliquer la configuration du contrôleur de domaine.
+
+#### 📷 Capture d’écran
+
+![Promotion du contrôleur de domaine terminée](Images/DCpromote.png)
 
 ---
 
-## 📷 Additional Screenshot
+## ✅ Vérifications après l’installation
 
-![Final DC State](Images/DCpromote2.png)
+Les éléments suivants ont été validés avec succès :
+
+- ✅ Domaine **`evilcorp.local`** créé avec succès
+- ✅ Adresse IP statique configurée correctement
+- ✅ Accès **RDP** activé (important pour l’administration à distance)
+- ✅ Zone DNS créée automatiquement
+- ✅ Partages **SYSVOL** et **NETLOGON** présents et fonctionnels
+- ✅ Outil de diagnostic **`dcdiag`** exécuté avec succès
+
+---
+
+## 🔐 Bonnes pratiques RDP (améliorations futures)
+
+Pour renforcer la sécurité de l’administration à distance :
+
+1. Limiter l’accès aux **administrateurs autorisés uniquement**
+2. Activer l’**authentification au niveau du réseau (NLA)**
+3. Mettre en place l’**audit et la journalisation** des connexions RDP
+4. Éviter l’utilisation directe du compte **Administrator** par défaut
+
+---
+
+## 📝 Prochaines étapes
+
+- Créer les **utilisateurs et groupes** dans Active Directory
+- Configurer les **objets de stratégie de groupe (GPO)**
+- Configurer les **redirecteurs DNS**
+- Mettre en place une **stratégie de sauvegarde Active Directory**
+- Déployer des postes clients dans le domaine
+- Renforcer la sécurité de l’infrastructure
+- ...
+
+---
+
+## 📷 Capture d’écran finale
+
+![État final du contrôleur de domaine](Images/DCpromote2.png)
+
+---
+
+## 🎯 Résultat
+
+Le serveur **Windows Server 2019** est désormais opérationnel en tant que **contrôleur de domaine principal** pour le domaine **`evilcorp.local`**, avec les services **Active Directory**, **DNS**, **SYSVOL** et **NETLOGON** correctement configurés.
