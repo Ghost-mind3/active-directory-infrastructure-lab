@@ -1,57 +1,58 @@
-# 11 - Windows LAPS (Local Administrator Password Solution)
+# 11 - Déploiement de Windows LAPS (Local Administrator Password Solution)
 
-## Overview
+## 📌 Vue d’ensemble
 
-This step focuses on implementing **Windows LAPS** in the Active Directory environment.
+Cette étape consiste à mettre en œuvre **Windows LAPS (Local Administrator Password Solution)** dans l’environnement Active Directory.
 
-Windows LAPS automatically manages the **local administrator password** for domain-joined machines by generating unique passwords and securely storing them in Active Directory.
+Windows LAPS permet de gérer automatiquement les mots de passe des comptes administrateurs locaux sur les machines intégrées au domaine en générant des mots de passe uniques et en les stockant de manière sécurisée dans Active Directory.
 
-This prevents the use of identical local administrator passwords across multiple systems and significantly reduces the risk of **lateral movement attacks** within the domain.
-
----
-
-# Objective
-
-The objectives of this configuration are:
-
-- Generate a **unique local administrator password** for each workstation
-- Store the password securely in **Active Directory**
-- Allow authorized administrators to retrieve passwords when necessary
-- Reduce the risk of credential reuse and lateral movement
+Cette solution élimine l’utilisation du même mot de passe administrateur local sur plusieurs machines et réduit considérablement les risques de **mouvement latéral (Lateral Movement)** lors d'une compromission.
 
 ---
 
-# Environment
+# 🎯 Objectif
 
-```
-Domain: evilcorp.local
+Les objectifs de cette configuration sont :
+
+- Générer un mot de passe administrateur local unique pour chaque poste de travail
+- Stocker les mots de passe de manière sécurisée dans Active Directory
+- Permettre aux administrateurs autorisés de consulter les mots de passe lorsque cela est nécessaire
+- Réduire les risques liés à la réutilisation des identifiants
+- Limiter les possibilités de déplacement latéral dans le domaine
+
+---
+
+# 🏢 Environnement
+
+```text
+Domaine : evilcorp.local
 ```
 
-Target Organizational Unit:
+OU cible :
 
-```
+```text
 evilcorp.local
 └── OU=Endpoints
     └── OU=Workstations
 ```
 
-All workstations located in this OU will be managed by Windows LAPS.
+Tous les postes de travail présents dans cette unité d’organisation seront gérés par Windows LAPS.
 
 ---
 
-# Step 1 - Verify Windows LAPS Availability
+# 🔍 Étape 1 - Vérification de la disponibilité de Windows LAPS
 
-On the Domain Controller, verify that Windows LAPS is available.
+Sur le contrôleur de domaine, vérifier que les modules Windows LAPS sont disponibles.
 
-Open **PowerShell as Administrator** and run:
+Ouvrir **PowerShell en tant qu’administrateur** puis exécuter :
 
 ```powershell
 Get-Command *Laps*
 ```
 
-Expected output includes commands similar to:
+Le résultat attendu doit inclure des commandes similaires à :
 
-```
+```text
 Update-LapsADSchema
 Set-LapsADComputerSelfPermission
 Set-LapsADReadPasswordPermission
@@ -59,190 +60,260 @@ Get-LapsADPassword
 Invoke-LapsPolicyProcessing
 ```
 
-This confirms that Windows LAPS is available on the server.
+La présence de ces commandes confirme que Windows LAPS est installé et disponible sur le serveur.
+
+### 📷 Captures d’écran
+
+![Commandes PowerShell LAPS](Images/PowersellScreen.png)
+
+![Commandes PowerShell LAPS](Images/PowershellScreen2.png)
 
 ---
 
-# Step 2 - Extend the Active Directory Schema
+# 🗄️ Étape 2 - Extension du schéma Active Directory
 
-Windows LAPS requires additional attributes in Active Directory.
+Windows LAPS nécessite l’ajout d’attributs spécifiques dans le schéma Active Directory.
 
-Run the following command:
+Exécuter la commande suivante :
 
 ```powershell
 Update-LapsADSchema
 ```
 
-This command extends the Active Directory schema to support LAPS password storage.
+Cette commande ajoute les attributs nécessaires au stockage sécurisé des mots de passe LAPS.
 
 ---
 
-# Step 3 - Allow Computers to Store Their Passwords
+# 🔐 Étape 3 - Autoriser les ordinateurs à stocker leurs mots de passe
 
-Domain computers must have permission to write their password information into Active Directory.
+Les ordinateurs du domaine doivent disposer des droits nécessaires pour écrire leurs informations LAPS dans Active Directory.
 
-Run:
+Exécuter :
 
 ```powershell
 Set-LapsADComputerSelfPermission -Identity "OU=Workstations,OU=Endpoints,DC=evilcorp,DC=local"
 ```
 
-This allows computers located in the **Workstations OU** to update their own LAPS password attributes.
+Cette commande autorise les ordinateurs situés dans l’OU **Workstations** à mettre à jour leurs propres attributs LAPS.
 
 ---
 
-# Step 4 - Allow IT Support to Read LAPS Passwords
+# 👥 Étape 4 - Autoriser le support informatique à consulter les mots de passe
 
-Authorized administrators must be able to retrieve stored passwords.
+Les administrateurs autorisés doivent pouvoir récupérer les mots de passe stockés dans Active Directory.
 
-In this lab environment, the **GG_IT_Support** group is granted permission to read LAPS passwords.
+Dans ce laboratoire, le groupe :
 
-Run:
+```text
+GG_IT_Support
+```
+
+reçoit les autorisations de lecture des mots de passe LAPS.
+
+Commande utilisée :
 
 ```powershell
 Set-LapsADReadPasswordPermission -Identity "OU=Workstations,OU=Endpoints,DC=evilcorp,DC=local" -AllowedPrincipals "evilcorp\GG_IT_Support"
 ```
 
-Members of this group can now retrieve local administrator passwords from Active Directory.
+Les membres de ce groupe peuvent désormais consulter les mots de passe administrateur local des postes concernés.
 
 ---
 
-# Step 5 - Create the LAPS Group Policy
+# ⚙️ Étape 5 - Création de la stratégie de groupe LAPS
 
-Open **Group Policy Management Console (GPMC)**.
+Ouvrir la **Console de gestion des stratégies de groupe (GPMC)**.
 
-Navigate to:
+Naviguer vers :
 
-```
-Forest: evilcorp.local
-└── Domains
+```text
+Forêt : evilcorp.local
+└── Domaines
     └── evilcorp.local
         └── OU=Endpoints
             └── OU=Workstations
 ```
 
-Then:
+Puis :
 
-1. Right-click **Workstations**
-2. Select **Create a GPO in this domain, and Link it here**
-3. Name the policy:
+1. Faire un clic droit sur **Workstations**
+2. Sélectionner **Créer un objet GPO dans ce domaine et le lier ici**
+3. Nommer la stratégie :
 
-```
+```text
 GPO-LAPS
 ```
 
+### 📷 Capture d’écran
+
+![Création de la GPO LAPS](Images/GPO-Laps.png)
+
 ---
-![Laps-Gpo](Images/GPO-Laps.png)
 
-# Step 6 - Configure LAPS Policy Settings
+# 🛠️ Étape 6 - Configuration des paramètres LAPS
 
-Edit the newly created GPO.
+Modifier la GPO nouvellement créée.
 
-Navigate to:
+Chemin de configuration :
 
-```
-Computer Configuration
-└── Policies
-    └── Administrative Templates
+```text
+Configuration ordinateur
+└── Stratégies
+    └── Modèles d'administration
         └── LAPS
 ```
 
-Configure the following settings.
+---
+
+## Activation de la gestion des mots de passe administrateur local
+
+Configurer la stratégie suivante :
+
+```text
+Enable local admin password management
+```
+
+Valeur :
+
+```text
+Activé (Enabled)
+```
+
+Cette option active la gestion automatique des mots de passe administrateur local.
 
 ---
 
-## Enable Local Admin Password Management
+## Configuration de la politique de mot de passe
 
-Set the following policy to:
+Configuration recommandée :
 
+```text
+Longueur du mot de passe : 14 caractères
+Complexité : Activée
+Âge maximum du mot de passe : 30 jours
 ```
-Enabled
-```
 
-This activates local administrator password management.
+Cette configuration garantit :
+
+- Des mots de passe robustes
+- Une rotation automatique
+- Une meilleure protection contre les attaques basées sur les identifiants
+
+### 📷 Capture d’écran
+
+![Configuration de la GPO LAPS](Images/GPO-Laps2.png)
 
 ---
 
-## Configure Password Settings
+# 🖥️ Étape 7 - Application de la stratégie sur un poste de travail
 
-Recommended enterprise configuration:
-
-```
-Password Length: 14
-Password Complexity: Enabled
-Password Age: 30 days
-```
-
-This ensures strong password generation and automatic password rotation.
-
----
-
-![Laps-Gpo](Images/GPO-Laps2.png)
-# Step 7 - Apply the Policy on a Workstation
-
-On a domain workstation, update Group Policy:
+Sur un poste membre du domaine, appliquer immédiatement la stratégie :
 
 ```powershell
 gpupdate /force
 ```
 
-Then force LAPS policy processing:
+Puis forcer l’exécution de la stratégie LAPS :
 
 ```powershell
 Invoke-LapsPolicyProcessing
 ```
 
-This triggers the generation and storage of the local administrator password.
+Cette commande déclenche :
+
+- La génération d’un nouveau mot de passe
+- Son stockage dans Active Directory
+- L’application des paramètres configurés
 
 ---
 
-# Step 8 - Retrieve the LAPS Password
+# 🔑 Étape 8 - Consultation du mot de passe LAPS
 
-Authorized administrators can retrieve the local administrator password using PowerShell.
+Les administrateurs autorisés peuvent récupérer le mot de passe administrateur local directement depuis Active Directory.
 
-Example command:
+Exemple :
 
 ```powershell
 Get-LapsADPassword WORKSTATION-NAME
 ```
 
+Cette commande affiche :
 
-# Result
-
-After implementing Windows LAPS:
-
-- Each workstation has a **unique local administrator password**
-- Passwords are **automatically rotated**
-- Passwords are **securely stored in Active Directory**
-- Authorized administrators can retrieve passwords when required
+- Le mot de passe actuel
+- Sa date d’expiration
+- Les informations associées à l’objet ordinateur
 
 ---
 
-# Security Benefits
+# ✅ Résultat
 
-Implementing Windows LAPS provides several advantages:
+Après le déploiement de Windows LAPS :
 
-- Prevents password reuse across multiple machines
-- Reduces the risk of **lateral movement attacks**
-- Centralizes password management
-- Improves the overall security posture of the Active Directory environment
+- Chaque poste possède un mot de passe administrateur local unique
+- Les mots de passe sont renouvelés automatiquement
+- Les mots de passe sont stockés de manière sécurisée dans Active Directory
+- Seuls les groupes autorisés peuvent consulter les mots de passe
+- La gestion des accès privilégiés est renforcée
+
+---
+
+# 🔐 Bénéfices de sécurité
+
+La mise en œuvre de Windows LAPS apporte plusieurs avantages :
+
+### Protection contre le mouvement latéral
+
+Un attaquant ne peut plus réutiliser le mot de passe administrateur local d'une machine compromise sur d'autres postes du domaine.
+
+### Réduction de la réutilisation des mots de passe
+
+Chaque poste possède un mot de passe unique.
+
+### Centralisation de la gestion
+
+Les mots de passe sont gérés automatiquement et stockés dans Active Directory.
+
+### Renforcement de la sécurité Active Directory
+
+Les comptes administrateurs locaux deviennent beaucoup plus difficiles à exploiter dans le cadre d'une attaque interne.
+
+### Conformité aux bonnes pratiques Microsoft
+
+Windows LAPS est aujourd'hui considéré comme un composant essentiel du durcissement d'un environnement Active Directory.
 
 ---
 
-# Screenshots
+# 📷 Captures d’écran
 
-Configuration screenshots are stored in the **Images** directory.
+## Commandes PowerShell LAPS
 
-include:
+![Commandes PowerShell LAPS](Images/PowersellScreen.png)
 
-**LAPS PowerShell commands**
-![Powershell-Commands](Images/PowersellScreen.png)
-
-![Powershell-Commands](Images/PowershellScreen2.png)
-
-Group Policy configuration
-- Password retrieval from Active Directory
+![Commandes PowerShell LAPS](Images/PowershellScreen2.png)
 
 ---
-![Laps-Gpo](Images/GPO-Laps2.png)
 
+## Configuration de la GPO LAPS
+
+![Configuration GPO LAPS](Images/GPO-Laps.png)
+
+![Configuration GPO LAPS](Images/GPO-Laps2.png)
+
+---
+
+# 🧠 Points clés à retenir
+
+- Chaque poste de travail dispose d’un mot de passe administrateur local unique.
+- Les mots de passe sont automatiquement renouvelés selon la politique définie.
+- Les mots de passe sont stockés de manière sécurisée dans Active Directory.
+- Les accès aux mots de passe sont contrôlés via des groupes de sécurité.
+- Windows LAPS réduit fortement les risques de mouvement latéral dans le domaine.
+- LAPS constitue une mesure de sécurité essentielle pour tout environnement Active Directory moderne.
+
+---
+
+## 🎯 Conclusion
+
+Le déploiement de **Windows LAPS** dans le domaine **`evilcorp.local`** permet de renforcer considérablement la sécurité des postes de travail en supprimant la problématique des mots de passe administrateur locaux partagés.
+
+Cette solution s'intègre parfaitement à la stratégie de **Privileged Access Management (PAM)** mise en place précédemment et constitue une couche supplémentaire de protection contre les compromissions et les attaques internes.
