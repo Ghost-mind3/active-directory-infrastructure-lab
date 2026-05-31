@@ -1,153 +1,192 @@
-# 13 - Security Rationale
+# 13 - Justification des mesures de sécurité
 
-## Overview
+## 📌 Vue d’ensemble
 
-This section explains the reasoning behind the security configurations implemented in this Active Directory lab.
+Cette section explique les raisons ayant motivé les différentes configurations de sécurité mises en œuvre dans ce laboratoire Active Directory.
 
-The goal is to move beyond "how it works" and focus on **why these configurations are important**, and what risks they help mitigate.
+L'objectif n'est pas uniquement de comprendre **comment ces mécanismes fonctionnent**, mais surtout **pourquoi ils sont importants** et quels risques ils permettent de réduire ou d'éliminer.
 
----
-
-## Workstation Security Baseline (GPO)
-
-### What was done
-
-- Disabled Guest account  
-- Restricted insecure logon configurations  
-- Managed local administrators using Restricted Groups  
-
-### Why
-
-These settings reduce the attack surface on domain workstations and enforce controlled access.
-
-### Risk if not implemented
-
-- Unauthorized access through default accounts  
-- Weak authentication mechanisms  
-- Privilege escalation on endpoints  
+Une infrastructure sécurisée repose sur des choix réfléchis et adaptés aux menaces auxquelles elle peut être exposée.
 
 ---
 
-## Privileged Access Management
+# 🖥️ Stratégie de sécurité des postes de travail (GPO)
 
-### What was done
+## Configuration mise en œuvre
 
-- Separated administrative roles:
-  - `it.admin` → Domain administration  
-  - `it.support` → Local workstation administration  
-- Used security groups:
-  - `GG_Domain_Admins`  
-  - `GG_Workstation_Local_admins`  
+- Désactivation du compte **Guest (Invité)**
+- Désactivation des mécanismes d'authentification non sécurisés
+- Gestion des administrateurs locaux via **Restricted Groups**
 
-### Why
+## Pourquoi ?
 
-To enforce the **principle of least privilege** and avoid using highly privileged accounts for daily tasks.
+Ces mesures permettent de réduire la surface d'attaque des postes de travail du domaine tout en garantissant un contrôle centralisé des accès administratifs.
 
-### Risk if not implemented
+Elles contribuent également à appliquer des standards de sécurité homogènes sur l'ensemble des machines.
 
-- Overprivileged accounts  
-- Increased attack impact if a credential is compromised  
-- Poor access control management  
+## Risques en l'absence de cette configuration
 
----
-
-## Windows LAPS
-
-### What was done
-
-- Implemented LAPS to manage local administrator passwords  
-- Each workstation has a unique, automatically rotated password  
-
-### Why
-
-To prevent the reuse of local administrator credentials across multiple machines.
-
-### Risk if not implemented
-
-- Lateral movement across the network  
-- Full compromise of the environment from a single machine  
+- Accès non autorisés via des comptes par défaut
+- Utilisation de mécanismes d'authentification faibles
+- Élévation de privilèges sur les postes utilisateurs
+- Difficultés à contrôler les droits administratifs locaux
 
 ---
 
-## Group Policy (GPO)
+# 🔐 Gestion des accès privilégiés (Privileged Access Management)
 
-### What was done
+## Configuration mise en œuvre
 
-- Created and applied multiple GPOs:
-  - Workstation baseline  
-  - Audit policy  
-  - Admin restrictions  
-  - LAPS  
+Séparation des rôles administratifs :
 
-### Why
+- `it.admin` → Administration du domaine
+- `it.support` → Administration locale des postes de travail
 
-Group Policy provides centralized configuration and ensures consistent security across all domain systems.
+Utilisation des groupes de sécurité :
 
-### Risk if not implemented
+- `GG_Domain_Admins`
+- `GG_Workstation_Local_admins`
 
-- Inconsistent configurations  
-- Security gaps between machines  
-- Difficult administration  
+## Pourquoi ?
 
----
+Cette approche applique le principe du **moindre privilège (Least Privilege)**.
 
-## Audit Policy
+Les utilisateurs ne disposent que des droits nécessaires à leurs missions, ce qui limite l'exposition des comptes hautement privilégiés.
 
-### What was done
+Elle permet également une gestion plus simple et plus sécurisée des accès administratifs.
 
-- Enabled advanced audit policies:
-  - Logon events  
-  - Account management  
-  - Privilege use  
+## Risques en l'absence de cette configuration
 
-### Why
-
-To provide visibility into system activity and detect suspicious behavior.
-
-### Risk if not implemented
-
-- No trace of malicious activity  
-- Difficult incident response  
-- Lack of monitoring  
+- Comptes disposant de privilèges excessifs
+- Augmentation de l'impact d'une compromission de compte
+- Difficultés d'audit et de gestion des accès
+- Utilisation abusive des privilèges administratifs
 
 ---
 
-## Organizational Unit (OU) Structure
+# 🔑 Windows LAPS
 
-### What was done
+## Configuration mise en œuvre
 
-- Structured the domain using OUs:
-  - Employees  
-  - Endpoints  
-  - Groups  
+- Déploiement de Windows LAPS
+- Génération automatique d'un mot de passe unique pour chaque poste
+- Rotation automatique des mots de passe administrateur local
 
-### Why
+## Pourquoi ?
 
-To organize resources and apply policies efficiently.
+L'objectif est d'empêcher la réutilisation du même mot de passe administrateur local sur plusieurs machines.
 
-### Risk if not implemented
+Cette pratique est l'une des principales causes de propagation rapide lors d'une compromission interne.
 
-- Poor policy targeting  
-- Administrative complexity  
-- Increased configuration errors  
+## Risques en l'absence de cette configuration
 
----
-
-## Key Takeaway
-
-Security is not only about configuration, but about **understanding the purpose behind each decision**.
-
-This approach allows:
-
-- Better system design  
-- Stronger security posture  
-- Easier troubleshooting and improvement  
+- Déplacement latéral (*Lateral Movement*) entre les postes
+- Réutilisation d'identifiants compromis
+- Compromission progressive de l'ensemble du domaine à partir d'une seule machine
 
 ---
 
-## Conclusion
+# ⚙️ Stratégies de groupe (Group Policy Objects)
 
-This lab demonstrates that even a basic Active Directory environment can be significantly improved by applying simple but effective security principles.
+## Configuration mise en œuvre
 
-Understanding the "why" behind each configuration is essential for both system administration and cybersecurity.
+Création et déploiement de plusieurs GPO :
 
+- GPO-Workstation-Baseline
+- GPO-Audit-Policy
+- GPO-Admin-Restrictions
+- GPO-LAPS
+
+## Pourquoi ?
+
+Les stratégies de groupe permettent une administration centralisée et garantissent l'application uniforme des paramètres de sécurité sur l'ensemble du domaine.
+
+Elles réduisent considérablement les erreurs de configuration manuelle.
+
+## Risques en l'absence de cette configuration
+
+- Configurations incohérentes entre les machines
+- Multiplication des écarts de sécurité
+- Administration plus complexe
+- Difficultés de maintenance à long terme
+
+---
+
+# 📋 Politique d'audit
+
+## Configuration mise en œuvre
+
+Activation des stratégies d'audit avancées :
+
+- Événements d'ouverture de session
+- Gestion des comptes utilisateurs
+- Utilisation des privilèges
+- Modifications Active Directory
+
+## Pourquoi ?
+
+L'audit fournit une visibilité essentielle sur les activités du domaine.
+
+Il permet d'identifier rapidement les comportements suspects et facilite les investigations en cas d'incident de sécurité.
+
+## Risques en l'absence de cette configuration
+
+- Absence de traces lors d'une compromission
+- Difficultés à identifier l'origine d'un incident
+- Faible capacité de détection des attaques
+- Réponse aux incidents fortement limitée
+
+---
+
+# 🏢 Structure des unités d'organisation (OU)
+
+## Configuration mise en œuvre
+
+Organisation du domaine à l'aide d'unités d'organisation dédiées :
+
+- Employees
+- Endpoints
+- Groups
+
+## Pourquoi ?
+
+Cette structure permet :
+
+- Une organisation logique des ressources
+- Une application ciblée des GPO
+- Une administration simplifiée
+- Une meilleure évolutivité de l'environnement
+
+## Risques en l'absence de cette configuration
+
+- Difficulté à cibler les stratégies de groupe
+- Complexité administrative accrue
+- Multiplication des erreurs de configuration
+- Manque de visibilité sur les ressources du domaine
+
+---
+
+# 🧠 Point essentiel à retenir
+
+La sécurité ne consiste pas uniquement à appliquer des configurations techniques.
+
+Elle repose avant tout sur la compréhension des objectifs poursuivis par chaque mesure de protection.
+
+Comprendre le **pourquoi** derrière chaque configuration permet :
+
+- De concevoir des infrastructures plus robustes
+- D'améliorer la posture de sécurité globale
+- De faciliter le diagnostic et la résolution de problèmes
+- D'adapter efficacement les contrôles de sécurité aux besoins réels de l'organisation
+
+---
+
+# 🎯 Conclusion
+
+Ce laboratoire démontre qu'un environnement Active Directory relativement simple peut être considérablement renforcé grâce à l'application de principes de sécurité fondamentaux.
+
+Les mécanismes mis en œuvre — gestion des privilèges, stratégies de groupe, audit avancé, segmentation logique et Windows LAPS — constituent des mesures efficaces pour réduire les risques les plus courants rencontrés dans les infrastructures Active Directory.
+
+Au-delà de la mise en œuvre technique, comprendre les raisons qui motivent chaque configuration est une compétence essentielle pour les administrateurs systèmes et les professionnels de la cybersécurité.
+
+Cette approche permet de construire des environnements plus résilients, plus faciles à administrer et mieux préparés face aux menaces actuelles.
