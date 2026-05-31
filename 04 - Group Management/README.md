@@ -1,118 +1,185 @@
-# 04 - Group Management
+# 04 - Gestion des groupes
 
-## 📌 Objective
+## 📌 Objectif
 
-Design and implement security groups to manage access control using a structured Role-Based Access Control (RBAC) model.
+Concevoir et mettre en place des groupes de sécurité afin de gérer les droits d’accès selon un modèle structuré de **contrôle d’accès basé sur les rôles (RBAC – Role-Based Access Control)**.
 
-All groups created in this phase:
+Tous les groupes créés dans cette phase possèdent les caractéristiques suivantes :
 
-- Type: Security
-- Scope: Global
-- Naming Convention: GG_<Department>_<Role>
-
----
-
-## 🧠 Why Create Security Groups?
-
-Creating security groups is a fundamental best practice in Active Directory environments.
-
-Instead of assigning permissions directly to users, permissions are assigned to groups, and users are added to those groups.
-
-This approach provides:
-
-- Centralized access management
-- Easier onboarding and offboarding
-- Reduced configuration errors
-- Improved scalability
-- Clear separation of responsibilities
-- Simplified auditing
-- ...
-
-If a user changes department or role, access can be modified simply by changing group membership.
+- **Type :** Sécurité (*Security*)
+- **Étendue :** Globale (*Global*)
+- **Convention de nommage :** `GG_<Département>_<Rôle>`
 
 ---
 
-## 🏷️ Naming Convention
+## 🧠 Pourquoi créer des groupes de sécurité ?
 
-All groups follow this structure:
+La création de groupes de sécurité constitue une bonne pratique essentielle dans un environnement Active Directory.
 
-GG = Global Group  
+Plutôt que d’attribuer directement des permissions aux utilisateurs, les droits sont attribués à des groupes, puis les utilisateurs sont ajoutés aux groupes appropriés.
+
+Cette approche apporte plusieurs avantages :
+
+- Gestion centralisée des accès
+- Simplification de l’intégration (*onboarding*) et du départ (*offboarding*) des utilisateurs
+- Réduction des erreurs de configuration
+- Meilleure évolutivité de l’infrastructure
+- Séparation claire des responsabilités
+- Simplification des audits et contrôles de sécurité
+- Administration plus efficace des permissions
+
+Lorsqu’un utilisateur change de service ou de fonction, il suffit de modifier son appartenance aux groupes pour adapter ses droits d’accès.
+
+---
+
+## 🏷️ Convention de nommage
+
+Tous les groupes respectent la structure suivante :
+
+```text
+GG = Global Group
+
+Exemple :
 GG_IT_Admins
+```
 
-This naming standard ensures:
+Cette convention permet :
 
-- Immediate identification of group scope
-- Consistency across the domain
-- Easier long-term maintenance
-
----
-
-## 👥 Groups Created
-
-### 🔐 IT Department
-
-- **GG_IT_Admins**  
-  Administrative accounts within the IT department.
-
-- **GG_IT_Support**  
-  Technical support team members.
+- D’identifier immédiatement l’étendue du groupe
+- D’assurer une cohérence dans tout le domaine
+- De faciliter la maintenance à long terme
+- D’améliorer la lisibilité de l’environnement Active Directory
 
 ---
 
-### 🏢 Human Resources Department
+## 👥 Groupes créés
 
-- **GG_RH**  
-  HR department users.
+### 🔐 Département Informatique (IT)
 
----
+#### **GG_IT_Admins**
 
-### 💰 Finance Department
+Comptes administratifs du département informatique.
 
-- **GG_Finance**  
-  Finance department users.
+**Utilisation :**
 
----
+- Administration des systèmes
+- Gestion de l’infrastructure Active Directory
+- Tâches nécessitant des privilèges élevés
 
-### 🖥️ Workstation Administration
+#### **GG_IT_Support**
 
-- **GG_Workstation_Local-Admin**  
-  Users delegated with local administrative rights on workstations.
+Membres de l’équipe de support technique.
 
----
+**Utilisation :**
 
-## 🌍 Why Global Scope?
-
-Global Groups are used to group users from the same domain based on role or department.
-
-They are ideal for:
-
-- Grouping users by business function
-- Structuring access logically
-- Delegating permissions efficiently
-
-Global groups can later be nested into other groups if needed.
+- Assistance aux utilisateurs
+- Support de premier et second niveau
+- Gestion des postes de travail
 
 ---
 
-## 🔐 Access Control Model
+### 🏢 Département Ressources Humaines (RH)
 
-The following layered access control model is applied:
+#### **GG_RH**
 
+Utilisateurs du département Ressources Humaines.
+
+**Utilisation :**
+
+- Accès aux ressources RH
+- Gestion des dossiers administratifs
+- Application de GPO spécifiques au service RH
+
+---
+
+### 💰 Département Finance
+
+#### **GG_Finance**
+
+Utilisateurs du département Finance.
+
+**Utilisation :**
+
+- Accès aux ressources financières
+- Gestion des documents comptables
+- Application de politiques spécifiques au service Finance
+
+---
+
+### 🖥️ Administration des postes de travail
+
+#### **GG_Workstation_Local-Admin**
+
+Utilisateurs disposant de privilèges administratifs locaux sur les postes de travail.
+
+**Utilisation :**
+
+- Installation de logiciels autorisés
+- Maintenance locale des postes
+- Dépannage nécessitant des droits élevés
+
+> ⚠️ Les membres de ce groupe disposent uniquement de privilèges administratifs locaux sur les postes concernés et ne possèdent pas de droits d’administration sur le domaine.
+
+---
+
+## 🌍 Pourquoi utiliser une étendue globale ?
+
+Les **groupes globaux (Global Groups)** sont conçus pour regrouper les utilisateurs d’un même domaine selon leur fonction ou leur département.
+
+Ils sont particulièrement adaptés pour :
+
+- Regrouper les utilisateurs selon leur rôle métier
+- Structurer les accès de manière logique
+- Faciliter la délégation des permissions
+- Simplifier l’administration des accès
+
+Les groupes globaux peuvent ensuite être intégrés dans d’autres groupes (par exemple des groupes locaux de domaine) afin d’appliquer les permissions selon le modèle **AGDLP**.
+
+---
+
+## 🔐 Modèle de contrôle d’accès
+
+Le modèle suivant est appliqué dans l’environnement :
+
+```text
+Comptes utilisateurs
+        ↓
+Groupes globaux
+        ↓
+Permissions sur les ressources
+```
+
+Ou selon la terminologie Microsoft :
+
+```text
 Accounts → Global Groups → Resource Permissions
+```
 
-This ensures:
+Cette architecture garantit :
 
-- Structured delegation
-- Controlled privilege assignment
-- Reduced direct user-level permission assignment
+- Une délégation structurée des accès
+- Une attribution contrôlée des privilèges
+- Une réduction des permissions attribuées directement aux utilisateurs
+- Une meilleure traçabilité des droits
 
 ---
 
-## 📷 Screenshots
+## 📷 Captures d’écran
 
-![GPimage_01](Images/createGP2.png)
+### Création des groupes de sécurité
 
-![GPimage_02](Images/createGP.png)
+![Création des groupes](Images/createGP2.png)
 
-![GPimage_full](Images/createGPfull.png)
+### Configuration des groupes
 
+![Configuration des groupes](Images/createGP.png)
+
+### Vue d’ensemble des groupes
+
+![Vue complète des groupes](Images/createGPfull.png)
+
+---
+
+## 🎯 Résultat
+
+L’infrastructure dispose désormais d’une base solide de groupes de sécurité respectant les bonnes pratiques Active Directory et le modèle **RBAC**. Cette organisation permettra d’administrer efficacement les accès, de simplifier les futures délégations de permissions et de préparer la mise en œuvre des stratégies de sécurité avancées.
