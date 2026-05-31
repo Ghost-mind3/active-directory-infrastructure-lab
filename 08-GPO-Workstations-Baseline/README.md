@@ -1,169 +1,218 @@
-# 08 - Workstation Security Baseline (GPO)
+# 08 - Mise en place d’une stratégie de sécurité de base pour les postes de travail (GPO)
 
-## Overview
+## 📌 Vue d’ensemble
 
-This step focuses on creating and configuring a **baseline Group Policy Object (GPO)** for domain workstations.  
-The objective is to enforce essential security settings and centralized administration across all client machines within the domain.
+Cette étape consiste à créer et configurer une **stratégie de groupe (GPO)** servant de référence de sécurité (*Security Baseline*) pour les postes de travail du domaine.
 
-The policy is applied to the **Workstations Organizational Unit**, ensuring consistent configuration for all domain-joined workstations.
+L'objectif est d'appliquer des paramètres de sécurité essentiels et une administration centralisée sur l'ensemble des postes clients intégrés au domaine.
+
+La stratégie est appliquée à l'**unité d'organisation (OU) Workstations**, garantissant une configuration homogène pour tous les postes du domaine.
 
 ---
 
-## Target Scope
+## 🎯 Périmètre d'application
 
-The GPO is linked to the following Organizational Unit:
+La GPO est liée à l'unité d'organisation suivante :
 
-```
+```text
 evilcorp.local
 └── OU=Endpoints
     └── OU=Workstations
 ```
 
-All computers placed inside this OU automatically receive the security configuration defined by the policy.
+Tous les ordinateurs placés dans cette OU reçoivent automatiquement les paramètres définis par cette stratégie.
 
 ---
 
-## GPO Creation Procedure
+## 🔧 Procédure de création de la GPO
 
-The policy was created using **Group Policy Management Console (GPMC)**.
+La stratégie a été créée à l'aide de la **Console de gestion des stratégies de groupe (GPMC)**.
 
-1. Open **Group Policy Management**
-2. Navigate to:
+### Étapes
 
-```
-Forest: evilcorp.local
-└── Domains
+1. Ouvrir **Gestion des stratégies de groupe** (*Group Policy Management*)
+2. Naviguer jusqu'à l'emplacement suivant :
+
+```text
+Forêt : evilcorp.local
+└── Domaines
     └── evilcorp.local
         └── OU=Endpoints
             └── OU=Workstations
 ```
 
-3. Right-click **OU=Workstations**
-4. Select **Create a GPO in this domain, and Link it here**
-5. Name the policy:
+3. Faire un clic droit sur **OU=Workstations**
+4. Sélectionner **Créer un objet GPO dans ce domaine et le lier ici**
+5. Nommer la stratégie :
 
-```
+```text
 GPO-Workstation-Baseline
 ```
 
 ---
 
-# Security Configuration
+# 🔐 Configuration de sécurité
 
-Security settings were configured under:
+Les paramètres de sécurité ont été configurés dans :
 
-```
-Computer Configuration
-└── Policies
-    └── Windows Settings
-        └── Security Settings
-```
-
-The baseline includes several controls designed to improve workstation security.
-
----
-
-# Windows Defender Firewall Configuration
-
-The **Windows Defender Firewall** was configured through the GPO to ensure that all domain workstations have an active firewall policy.
-
-Configuration path:
-
-```
-Computer Configuration
-└── Policies
-    └── Windows Settings
-        └── Security Settings
-            └── Windows Defender Firewall with Advanced Security
+```text
+Configuration ordinateur
+└── Stratégies
+    └── Paramètres Windows
+        └── Paramètres de sécurité
 ```
 
-The firewall was configured to ensure the following:
-
-- Firewall **enabled for the Domain profile**
-- Centralized firewall management through **Group Policy**
-- Protection against unauthorized inbound connections
-
-This configuration ensures that all domain workstations enforce a consistent network security policy.
+Cette stratégie regroupe plusieurs mesures destinées à renforcer la sécurité des postes de travail du domaine.
 
 ---
 
-# Guest Account Hardening
+# 🛡️ Configuration du pare-feu Windows Defender
 
-The built-in **Guest account** was disabled.
+Le **pare-feu Windows Defender** a été configuré via la GPO afin de garantir une politique de sécurité réseau cohérente sur tous les postes du domaine.
 
-Disabling this account prevents anonymous or unauthorized access attempts that could otherwise be exploited within the environment.
+### Emplacement de configuration
 
----
-
-# Secure Logon Configuration
-
-Insecure logon mechanisms were disabled in order to enforce stronger authentication standards within the domain environment.
-
-This reduces the risk of authentication abuse and improves the overall security posture of domain workstations.
-
----
-
-# Restricted Groups Configuration
-
-To centralize administrative privilege management, **Restricted Groups** were configured.
-
-The following Active Directory security group is used:
-
-```
-GG_Workstation_Local-admins
+```text
+Configuration ordinateur
+└── Stratégies
+    └── Paramètres Windows
+        └── Paramètres de sécurité
+            └── Pare-feu Windows Defender avec fonctions avancées de sécurité
 ```
 
-This group is automatically added to the **local Administrators group** on all domain workstations.
+### Paramètres appliqués
 
-### Benefits
+- Activation du pare-feu pour le **profil Domaine**
+- Administration centralisée du pare-feu via les stratégies de groupe
+- Protection contre les connexions entrantes non autorisées
 
-- Centralized management of administrator privileges
-- Consistent privilege assignment across all workstations
-- Reduced risk of privilege misuse
-- Simplified administrative management
+### Objectif
 
-Using **security groups instead of individual user accounts** follows standard enterprise best practices.
-
----
-
-# Screenshots
-
-## GPO Creation
-
-![GPO Creation](Images/GPO-Workstations3.png)
+Cette configuration garantit que tous les postes de travail appliquent une politique de sécurité réseau uniforme et conforme aux standards de l'entreprise.
 
 ---
 
-## Firewall Configuration
+# 🚫 Désactivation du compte Invité
 
-![Firewall Configuration](Images/Allow-Firewall.png)
+Le compte intégré **Guest (Invité)** a été désactivé.
 
----
+### Objectif
 
-## Security Policy Configuration
+La désactivation de ce compte permet :
 
-![Policy Configuration](Images/GPO-Workstations7.png)
+- De réduire la surface d'attaque
+- D'empêcher les connexions anonymes
+- De limiter les risques d'accès non autorisés
+- De renforcer la sécurité globale des postes clients
 
-![Policy Configuration](Images/GPO-Workstations10.png)
-
----
-
-## Restricted Groups Configuration
-
-![Groups Restricted](Images/Groups-Restricted.png)
-
-![Groups Restricted](Images/Groups-Restricted2.png)
-
-![Groups Restricted](Images/Groups-Restricted3.png)
-
-![Groups Restricted](Images/Groups-Restricted4.png)
+Cette mesure fait partie des recommandations de sécurité Microsoft pour les environnements Active Directory.
 
 ---
 
-# Key Takeaways
+# 🔑 Renforcement de l'authentification
 
-- Group Policy provides centralized configuration management in Active Directory environments.
-- Applying policies to Organizational Units ensures structured and scalable administration.
-- Disabling unnecessary accounts reduces potential attack surfaces.
-- Managing administrative access through security groups improves operational security.
-- Enforcing firewall policies through GPO strengthens network security across domain workstations.
+Les mécanismes d'authentification considérés comme peu sécurisés ont été désactivés afin d'imposer des standards d'authentification plus robustes.
+
+### Objectif
+
+Cette configuration permet :
+
+- De réduire les risques d'abus liés à l'authentification
+- De limiter certaines techniques d'attaque sur les identifiants
+- D'améliorer la posture de sécurité globale du domaine
+
+---
+
+# 👥 Configuration des groupes restreints (Restricted Groups)
+
+Afin de centraliser la gestion des privilèges administratifs locaux, la fonctionnalité **Restricted Groups** a été mise en œuvre.
+
+### Groupe Active Directory utilisé
+
+```text
+GG_Workstation_Local-Admins
+```
+
+Ce groupe est automatiquement ajouté au groupe local :
+
+```text
+Administrators
+```
+
+sur l'ensemble des postes de travail du domaine.
+
+---
+
+## ✅ Avantages
+
+L'utilisation des groupes restreints permet :
+
+- Une gestion centralisée des privilèges administratifs
+- Une attribution cohérente des droits sur tous les postes
+- Une réduction des risques liés aux privilèges excessifs
+- Une simplification de l'administration
+- Une meilleure traçabilité des accès privilégiés
+
+### Bonne pratique
+
+L'utilisation de **groupes de sécurité** plutôt que l'attribution directe de privilèges aux utilisateurs constitue une bonne pratique largement adoptée dans les environnements professionnels.
+
+---
+
+# 📷 Captures d'écran
+
+## Création de la GPO
+
+![Création de la GPO](Images/GPO-Workstations3.png)
+
+---
+
+## Configuration du pare-feu
+
+![Configuration du pare-feu](Images/Allow-Firewall.png)
+
+---
+
+## Configuration des paramètres de sécurité
+
+![Configuration de sécurité](Images/GPO-Workstations7.png)
+
+![Configuration de sécurité](Images/GPO-Workstations10.png)
+
+---
+
+## Configuration des groupes restreints
+
+![Restricted Groups](Images/Groups-Restricted.png)
+
+![Restricted Groups](Images/Groups-Restricted2.png)
+
+![Restricted Groups](Images/Groups-Restricted3.png)
+
+![Restricted Groups](Images/Groups-Restricted4.png)
+
+---
+
+# 🧠 Points clés à retenir
+
+- Les stratégies de groupe permettent une administration centralisée des systèmes Windows.
+- L'application des GPO aux unités d'organisation facilite une gestion structurée et évolutive.
+- La désactivation des comptes inutiles réduit la surface d'attaque de l'environnement.
+- La gestion des privilèges via des groupes de sécurité améliore la maîtrise des accès administratifs.
+- L'application centralisée du pare-feu renforce la sécurité réseau des postes de travail.
+- Une stratégie de sécurité de référence (*Security Baseline*) constitue une étape essentielle dans le durcissement d'un environnement Active Directory.
+
+---
+
+## 🎯 Résultat
+
+La GPO **`GPO-Workstation-Baseline`** a été déployée avec succès sur l'OU **Workstations**.
+
+Cette stratégie fournit un socle de sécurité homogène pour l'ensemble des postes de travail du domaine **`evilcorp.local`** et permet :
+
+- Une administration centralisée
+- Une meilleure gestion des privilèges
+- Une réduction des risques de compromission
+- Une application cohérente des standards de sécurité de l'entreprise
+
+Elle servira également de base aux futures configurations de sécurité et au déploiement d'autres stratégies de groupe dans l'environnement Active Directory.
