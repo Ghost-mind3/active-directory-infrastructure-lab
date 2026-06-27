@@ -1,5 +1,3 @@
-telle que je t'ai donner il faut juste traduire :# Active Directory Security Lab
-
 This project is a **hands-on Active Directory lab** built to practice system administration and basic security concepts.
 
 It shows how to deploy a domain, organize users and computers, and apply security settings using Group Policy.
